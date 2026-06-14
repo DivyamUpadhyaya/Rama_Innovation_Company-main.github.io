@@ -123,6 +123,7 @@
             align-items: center;
             gap: 8px;
             transition: opacity 0.2s ease;
+            cursor: pointer;
         }
 
         .profile-card .btn-profile:hover {
@@ -131,12 +132,12 @@
 
         .btn-linkedin {
             background-color: #0077b5;
-            color: #ffffff;
+            color: #ffffff !important;
         }
 
         .btn-github {
             background-color: #24292e;
-            color: #ffffff;
+            color: #ffffff !important;
         }
 
         .profile-card .loading {
@@ -237,8 +238,8 @@
                     </div>
 
                     <div class="links-row">
-                        <a id="link-linkedin" class="btn-profile btn-linkedin" href="#" target="_blank" style="display: none;"><i class="fab fa-linkedin-in"></i> LinkedIn Profile</a>
-                        <a id="link-github" class="btn-profile btn-github" href="#" target="_blank" style="display: none;"><i class="fab fa-github"></i> GitHub Profile</a>
+                        <a id="link-linkedin" class="btn-profile btn-linkedin" href="#" target="_blank" rel="noopener noreferrer" style="display: none;"><i class="fab fa-linkedin-in"></i> LinkedIn Profile</a>
+                        <a id="link-github" class="btn-profile btn-github" href="#" target="_blank" rel="noopener noreferrer" style="display: none;"><i class="fab fa-github"></i> GitHub Profile</a>
                     </div>
                 </div>
 
@@ -310,6 +311,20 @@
         const internName = urlParams.get('intern');
         const scriptUrl = "https://script.google.com/macros/s/AKfycbwzHOLrRl1D3H7kzqoCgTqVIxDAq7c-N2R2fbAZOwNsHJH3jM2S_jJpmfm72CfdJwE2sQ/exec";
 
+        // ── Helper: clean a URL value coming from Google Sheets ──────────────
+        function cleanUrl(raw) {
+            return raw
+                .replace(/^link:\s*/i, '')   // strip Google Forms "Link:" prefix
+                .replace(/[\r\n\t]/g, '')     // remove newlines / tabs
+                .replace(/\s+/g, '')          // remove any remaining whitespace
+                .trim();
+        }
+
+        // ── Helper: ensure URL has a protocol ────────────────────────────────
+        function ensureProtocol(url) {
+            return /^https?:\/\//i.test(url) ? url : 'https://' + url;
+        }
+
         if (internName) {
             fetch(`${scriptUrl}?intern=${encodeURIComponent(internName)}`)
                 .then(response => response.json())
@@ -357,52 +372,55 @@
                             document.getElementById('intern-duration').innerText = value;
                         }
 
-                        // Cleans hidden "Link:" headers injected by Google Forms
+                        // ── Photo ────────────────────────────────────────────
                         if (cleanKey.includes("photograph") || cleanKey.includes("photo")) {
                             let fileId = "";
-
-                            let cleanUrl = value.replace(/^link:\s*/i, '').trim();
+                            let photoUrl = cleanUrl(value);
 
                             try {
-                                if (cleanUrl.includes("id=")) {
-                                    let parts = cleanUrl.split("id=")[1];
+                                if (photoUrl.includes("id=")) {
+                                    let parts = photoUrl.split("id=")[1];
                                     fileId = parts.includes("&") ? parts.split("&")[0] : parts;
-                                } else if (cleanUrl.includes("/d/")) {
-                                    fileId = cleanUrl.split("/d/")[1].split("/")[0];
+                                } else if (photoUrl.includes("/d/")) {
+                                    fileId = photoUrl.split("/d/")[1].split("/")[0];
                                 } else {
-                                    let match = cleanUrl.match(/[-\w]{25,}/);
+                                    let match = photoUrl.match(/[-\w]{25,}/);
                                     if (match) fileId = match[0];
                                 }
                             } catch (e) {
-                                console.error("Error parsing clean photo URL:", e);
+                                console.error("Error parsing photo URL:", e);
                             }
 
                             if (fileId) {
                                 const photo = document.getElementById('intern-photo');
                                 photo.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w500`;
                                 photo.style.display = "inline-block";
-
                                 photo.onerror = function () {
                                     photo.src = `https://drive.google.com/uc?export=view&id=${fileId}`;
                                 };
                             }
                         }
 
+                        // ── LinkedIn ─────────────────────────────────────────
                         if (cleanKey.includes("linkedin")) {
-                            let linkedinUrl = value.replace(/^link:\s*/i, '').trim();
-                            if (!/^https?:\/\//i.test(linkedinUrl)) {
-                                linkedinUrl = 'https://' + linkedinUrl;
-                            }
-                            document.getElementById('link-linkedin').href = linkedinUrl;
-                            document.getElementById('link-linkedin').style.display = "inline-flex";
+                            console.log("LinkedIn raw value:", JSON.stringify(value));
+                            const linkedinUrl = ensureProtocol(cleanUrl(value));
+                            console.log("LinkedIn final URL:", linkedinUrl);
+
+                            const btn = document.getElementById('link-linkedin');
+                            btn.href = linkedinUrl;
+                            btn.style.display = "inline-flex";
                         }
+
+                        // ── GitHub ───────────────────────────────────────────
                         if (cleanKey.includes("github")) {
-                            let githubUrl = value.replace(/^link:\s*/i, '').trim();
-                            if (!/^https?:\/\//i.test(githubUrl)) {
-                                githubUrl = 'https://' + githubUrl;
-                            }
-                            document.getElementById('link-github').href = githubUrl;
-                            document.getElementById('link-github').style.display = "inline-flex";
+                            console.log("GitHub raw value:", JSON.stringify(value));
+                            const githubUrl = ensureProtocol(cleanUrl(value));
+                            console.log("GitHub final URL:", githubUrl);
+
+                            const btn = document.getElementById('link-github');
+                            btn.href = githubUrl;
+                            btn.style.display = "inline-flex";
                         }
                     });
 
