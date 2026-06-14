@@ -130,7 +130,7 @@ if (internName) {
                     document.getElementById('intern-duration').innerText = value;
                 }
 
-                // Updated bulletproof Photo URL Parser
+                // Updated web-optimized proxy bypass layout
                 if (cleanKey.includes("photograph") || cleanKey.includes("photo")) {
                     let fileId = "";
                     try {
@@ -149,8 +149,14 @@ if (internName) {
 
                     if (fileId) {
                         const photo = document.getElementById('intern-photo');
-                        photo.src = `https://drive.google.com/uc?export=view&id=${fileId}`;
+                        // Pull pre-rendered proxy format stream to bypass Form blocks
+                        photo.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w500`;
                         photo.style.display = "inline-block";
+                        
+                        photo.onerror = function () {
+                            console.warn("High-res proxy blocked. Trying standard fallback path...");
+                            photo.src = `https://drive.google.com/uc?export=view&id=${fileId}`;
+                        };
                     }
                 }
 
