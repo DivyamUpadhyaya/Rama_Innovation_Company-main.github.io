@@ -304,121 +304,113 @@
         </div>
     </footer>
 
-    <script src="../js/script.js"></script>
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const internName = urlParams.get('intern');
-        const scriptUrl = "https://script.google.com/macros/s/AKfycbwzHOLrRl1D3H7kzqoCgTqVIxDAq7c-N2R2fbAZOwNsHJH3jM2S_jJpmfm72CfdJwE2sQ/exec";
+    const urlParams = new URLSearchParams(window.location.search);
+    const internName = urlParams.get('intern');
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbwzHOLrRl1D3H7kzqoCgTqVIxDAq7c-N2R2fbAZOwNsHJH3jM2S_jJpmfm72CfdJwE2sQ/exec";
 
-        if (internName) {
-            fetch(`${scriptUrl}?intern=${encodeURIComponent(internName)}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('loader').style.display = 'none';
+    if (internName) {
+        fetch(`${scriptUrl}?intern=${encodeURIComponent(internName)}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loader').style.display = 'none';
 
-                    if (data.status !== "success") {
-                        document.getElementById('error-message').innerText = data.message || "Verification Failed: Record not found.";
-                        document.getElementById('error-message').style.display = 'block';
+                if (data.status !== "success") {
+                    document.getElementById('error-message').innerText = data.message || "Verification Failed: Record not found.";
+                    document.getElementById('error-message').style.display = 'block';
+                    return;
+                }
+
+                const sheetData = data.data;
+                console.log("Returned Data:", sheetData);
+
+                Object.keys(sheetData).forEach(key => {
+                    let cleanKey = key.toLowerCase().replace(/\s+/g, ' ').trim();
+                    let value = sheetData[key];
+
+                    // Skip empty values
+                    if (value === null || value === undefined || value.toString().trim() === "" || value.toString().toLowerCase() === "n/a") {
                         return;
                     }
 
-                    const sheetData = data.data;
-                    console.log("Returned Data:", sheetData);
+                    value = value.toString().trim();
 
-                    Object.keys(sheetData).forEach(key => {
-                        let cleanKey = key.toLowerCase().replace(/\s+/g, ' ').trim();
-                        let value = sheetData[key];
+                    // Map fields
+                    if (cleanKey.includes("full name")) {
+                        document.getElementById('intern-name').innerText = value;
+                    } else if (cleanKey.includes("certificate id")) {
+                        document.getElementById('intern-certificate-id').innerText = value;
+                    } else if (cleanKey.includes("college/university name")) {
+                        document.getElementById('intern-college').innerText = value;
+                    } else if (cleanKey === "branch") {
+                        document.getElementById('intern-branch').innerText = value;
+                    } else if (cleanKey.includes("college email id")) {
+                        document.getElementById('intern-college-email').innerText = value;
+                    } else if (cleanKey.includes("preferred internship domain")) {
+                        document.getElementById('intern-domain').innerText = value;
+                    } else if (cleanKey.includes("internship duration")) {
+                        document.getElementById('intern-duration').innerText = value;
+                    }
 
-                        if (value === null || value === undefined || value.toString().trim() === "" || value.toString().toLowerCase() === "n/a") {
-                            return;
-                        }
-
-                        value = value.toString().trim();
-
-                        if (cleanKey.includes("full name")) {
-                            document.getElementById('intern-name').innerText = value;
-                        }
-                        if (cleanKey.includes("certificate id")) {
-                            document.getElementById('intern-certificate-id').innerText = value;
-                        }
-                        if (cleanKey.includes("college/university name")) {
-                            document.getElementById('intern-college').innerText = value;
-                        }
-                        if (cleanKey === "branch") {
-                            document.getElementById('intern-branch').innerText = value;
-                        }
-                        if (cleanKey.includes("college email id")) {
-                            document.getElementById('intern-college-email').innerText = value;
-                        }
-                        if (cleanKey.includes("preferred internship domain")) {
-                            document.getElementById('intern-domain').innerText = value;
-                        }
-                        if (cleanKey.includes("internship duration")) {
-                            document.getElementById('intern-duration').innerText = value;
-                        }
-
-                        // Cleans hidden "Link:" headers injected by Google Forms
-                        if (cleanKey.includes("photograph") || cleanKey.includes("photo")) {
-                            let fileId = "";
-
-                            let cleanUrl = value.replace(/^link:\s*/i, '').trim();
-
-                            try {
-                                if (cleanUrl.includes("id=")) {
-                                    let parts = cleanUrl.split("id=")[1];
-                                    fileId = parts.includes("&") ? parts.split("&")[0] : parts;
-                                } else if (cleanUrl.includes("/d/")) {
-                                    fileId = cleanUrl.split("/d/")[1].split("/")[0];
-                                } else {
-                                    let match = cleanUrl.match(/[-\w]{25,}/);
-                                    if (match) fileId = match[0];
-                                }
-                            } catch (e) {
-                                console.error("Error parsing clean photo URL:", e);
+                    // Handle Photo
+                    if (cleanKey.includes("photograph") || cleanKey.includes("photo")) {
+                        let fileId = "";
+                        let cleanUrl = value.replace(/^link:\s*/i, '').trim();
+                        try {
+                            if (cleanUrl.includes("id=")) {
+                                let parts = cleanUrl.split("id=")[1];
+                                fileId = parts.includes("&") ? parts.split("&")[0] : parts;
+                            } else if (cleanUrl.includes("/d/")) {
+                                fileId = cleanUrl.split("/d/")[1].split("/")[0];
+                            } else {
+                                let match = cleanUrl.match(/[-\w]{25,}/);
+                                if (match) fileId = match[0];
                             }
+                        } catch (e) { console.error("Photo parsing error", e); }
 
-                            if (fileId) {
-                                const photo = document.getElementById('intern-photo');
-                                photo.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w500`;
-                                photo.style.display = "inline-block";
-
-                                photo.onerror = function () {
-                                    photo.src = `https://drive.google.com/uc?export=view&id=${fileId}`;
-                                };
-                            }
+                        if (fileId) {
+                            const photo = document.getElementById('intern-photo');
+                            photo.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w500`;
+                            photo.style.display = "inline-block";
                         }
+                    }
 
-                        if (cleanKey.includes("linkedin")) {
-                            let linkedinUrl = value.replace(/^link:\s*/i, '').trim();
-                            if (!/^https?:\/\//i.test(linkedinUrl)) {
-                                linkedinUrl = 'https://' + linkedinUrl;
-                            }
-                            document.getElementById('link-linkedin').href = linkedinUrl;
-                            document.getElementById('link-linkedin').style.display = "inline-flex";
+                    // UPDATED: Robust LinkedIn Logic
+                    if (cleanKey.includes("linkedin")) {
+                        let linkedinUrl = value.replace(/^link:\s*/i, '').trim();
+                        if (!/^https?:\/\//i.test(linkedinUrl)) {
+                            linkedinUrl = 'https://' + linkedinUrl;
                         }
-                        if (cleanKey.includes("github")) {
-                            let githubUrl = value.replace(/^link:\s*/i, '').trim();
-                            if (!/^https?:\/\//i.test(githubUrl)) {
-                                githubUrl = 'https://' + githubUrl;
-                            }
-                            document.getElementById('link-github').href = githubUrl;
-                            document.getElementById('link-github').style.display = "inline-flex";
-                        }
-                    });
+                        const btn = document.getElementById('link-linkedin');
+                        btn.href = linkedinUrl;
+                        btn.style.display = "inline-flex";
+                    }
 
-                    document.getElementById('profile-content').style.display = 'block';
-                })
-                .catch(error => {
-                    console.error(error);
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('error-message').innerText = "Connection Error: Failed to access database.";
-                    document.getElementById('error-message').style.display = 'block';
+                    // UPDATED: Robust GitHub Logic
+                    if (cleanKey.includes("github")) {
+                        let githubUrl = value.replace(/^link:\s*/i, '').trim();
+                        if (!/^https?:\/\//i.test(githubUrl)) {
+                            githubUrl = 'https://' + githubUrl;
+                        }
+                        const btn = document.getElementById('link-github');
+                        btn.href = githubUrl;
+                        btn.style.display = "inline-flex";
+                    }
                 });
-        } else {
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('error-message').innerText = "Invalid Request: No intern specified.";
-            document.getElementById('error-message').style.display = 'block';
-        }
-    </script>
+
+                document.getElementById('profile-content').style.display = 'block';
+            })
+            .catch(error => {
+                console.error(error);
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('error-message').innerText = "Connection Error: Failed to access database.";
+                document.getElementById('error-message').style.display = 'block';
+            });
+    } else {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('error-message').innerText = "Invalid Request: No intern specified.";
+        document.getElementById('error-message').style.display = 'block';
+    }
+</script>
 </body>
 </html>
