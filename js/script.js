@@ -2,6 +2,12 @@ document.addEventListener('DOMContentLoaded', function() {
   // Mobile Menu Toggle
   const hamburger = document.querySelector('.hamburger');
   const mobileMenu = document.querySelector('.mobile-menu');
+
+  // Update copyright year automatically
+  const copyrightYear = document.getElementById('copyright-year');
+  if (copyrightYear) {
+      copyrightYear.textContent = new Date().getFullYear();
+  }
   
   hamburger.addEventListener('click', function() {
       this.classList.toggle('active');
