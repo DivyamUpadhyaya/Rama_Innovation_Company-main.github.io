@@ -205,6 +205,10 @@
                     </div>
 
                     <div class="detail-section">
+                        <div class="label">Certificate ID</div>
+                        <div id="intern-certificate-id" class="value">N/A</div>
+                    </div>
+                    <div class="detail-section">
                         <div class="label">Internship Domain</div>
                         <div id="intern-domain" class="value">N/A</div>
                     </div>
@@ -225,6 +229,11 @@
                     <div class="detail-section">
                         <div class="label">College Email ID</div>
                         <div id="intern-college-email" class="value">N/A</div>
+                    </div>
+
+                    <div class="detail-section">
+                        <div class="label">Mentor Feedback</div>
+                        <div class="value">"Successfully completed the internship and demonstrated excellent problem-solving skills."</div>
                     </div>
 
                     <div class="links-row">
@@ -328,6 +337,9 @@
 
                         if (cleanKey.includes("full name")) {
                             document.getElementById('intern-name').innerText = value;
+                        }
+                        if (cleanKey.includes("certificate id")) {
+                            document.getElementById('intern-certificate-id').innerText = value;
                         }
                         if (cleanKey.includes("college/university name")) {
                             document.getElementById('intern-college').innerText = value;
