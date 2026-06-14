@@ -5,31 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intern Verification Profile</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background-color: #f4f4f9; }
-        .profile-card { background: white; padding: 30px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 450px; width: 100%; text-align: left; }
-        h2 { color: #333; margin-top: 0; text-align: center; border-bottom: 2px solid #eaeaea; padding-bottom: 15px; }
-        p { color: #444; font-size: 15px; margin: 12px 0; line-height: 1.4; }
-        strong { color: #111; }
-        .status-container { text-align: center; margin-top: 20px; padding-top: 10px; border-top: 1px solid #eee; }
-        .status { font-weight: bold; color: #2e7d32; background-color: #e8f5e9; padding: 8px 15px; border-radius: 20px; display: inline-block; }
-        .loading { font-style: italic; color: #999; text-align: center; }
-        .error { color: #c62828; background-color: #ffebee; padding: 15px; border-radius: 5px; text-align: center; font-weight: bold; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 40px 20px; background-color: #f4f6f9; color: #333; }
+        .profile-card { background: white; padding: 30px; border-radius: 15px; display: inline-block; box-shadow: 0 8px 16px rgba(0,0,0,0.08); max-width: 500px; width: 100%; text-align: left; box-sizing: border-box; }
+        
+        .photo-container { text-align: center; margin-bottom: 20px; }
+        .profile-photo { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 3px solid #2196F3; background-color: #eaeaea; display: inline-block; }
+        
+        h2 { color: #1a1a1a; margin: 10px 0 5px 0; text-align: center; font-size: 24px; }
+        .verification-status { text-align: center; margin-bottom: 25px; }
+        .status-badge { font-weight: bold; color: #2e7d32; background-color: #e8f5e9; padding: 6px 16px; border-radius: 20px; display: inline-block; font-size: 14px; }
+        
+        .detail-section { border-top: 1px solid #edf2f7; padding: 12px 0; display: flex; flex-direction: column; }
+        .label { font-size: 12px; color: #718096; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; letter-spacing: 0.5px; }
+        .value { font-size: 15px; color: #2d3748; font-weight: 500; word-break: break-word; }
+        
+        .links-row { display: flex; gap: 15px; margin-top: 15px; justify-content: center; }
+        .btn { padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; }
+        .btn-linkedin { background-color: #0077b5; color: white; }
+        .btn-github { background-color: #24292e; color: white; }
+        
+        .loading { font-style: italic; color: #718096; text-align: center; padding: 20px; }
+        .error { color: #e53e3e; background-color: #fff5f5; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; border: 1px solid #fed7d7; }
     </style>
 </head>
 <body>
 
 <div class="profile-card">
-    <div id="loader" class="loading">Validating credentials with server...</div>
+    <div id="loader" class="loading">Verifying credential parameters...</div>
     
     <div id="profile-content" style="display: none;">
-        <h2 id="intern-name">Intern Profile</h2>
-        <p><strong>Internship Domain:</strong> <span id="intern-role">N/A</span></p>
-        <p><strong>Duration:</strong> <span id="intern-duration">N/A</span></p>
-        <p><strong>College/University:</strong> <span id="intern-college">N/A</span></p>
-        <p><strong>Official Email ID:</strong> <span id="intern-email">N/A</span></p>
+        <div class="photo-container">
+            <img id="intern-photo" class="profile-photo" src="" alt="Student Photograph" style="display: none;">
+        </div>
+        <h2 id="intern-name">Loading...</h2>
+        <div class="verification-status">
+            <span class="status-badge">✓ Verified Rama Innovation Intern</span>
+        </div>
         
-        <div class="status-container">
-            <span class="status">✓ Verified Rama Innovation Intern</span>
+        <div class="detail-section">
+            <div class="label">Internship Domain</div>
+            <div id="intern-domain" class="value">N/A</div>
+        </div>
+        <div class="detail-section">
+            <div class="label">Duration</div>
+            <div id="intern-duration" class="value">N/A</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="label">College / University</div>
+            <div id="intern-college" class="value">N/A</div>
+        </div>
+        <div class="detail-section">
+            <div class="label">Branch</div>
+            <div id="intern-branch" class="value">N/A</div>
+        </div>
+
+        <div class="detail-section">
+            <div class="label">Personal Email Address</div>
+            <div id="intern-personal-email" class="value">N/A</div>
+        </div>
+        <div class="detail-section">
+            <div class="label">College Email ID</div>
+            <div id="intern-college-email" class="value">N/A</div>
+        </div>
+
+        <div class="links-row">
+            <a id="link-linkedin" class="btn btn-linkedin" href="#" target="_blank" style="display: none;">LinkedIn Profile</a>
+            <a id="link-github" class="btn btn-github" href="#" target="_blank" style="display: none;">GitHub Profile</a>
         </div>
     </div>
     
@@ -37,43 +79,64 @@
 </div>
 
 <script>
-    // 1. Parse query parameter out of URL bar
     const urlParams = new URLSearchParams(window.location.search);
     const internName = urlParams.get('intern');
-
-    // 2. Google Apps Script Deployment Execution API URL
     const scriptUrl = "https://script.google.com/macros/s/AKfycbwzHOLrRl1D3H7kzqoCgTqVIxDAq7c-N2R2fbAZOwNsHJH3jM2S_jJpmfm72CfdJwE2sQ/exec";
 
     if (internName) {
-        // 3. Initiate dynamic data lookup request
         fetch(`${scriptUrl}?intern=${encodeURIComponent(internName)}`)
             .then(response => response.json())
             .then(data => {
                 document.getElementById('loader').style.display = 'none';
                 
                 if (data.status === "success") {
-                    // 4. Data structural keys sanitized clean by the updated deployment script
-                    document.getElementById('intern-name').innerText = data.data["Full Name (Use CAPITAL LETTERS only)"] || internName;
-                    document.getElementById('intern-role').innerText = data.data["Select Your Preferred Internship Domain (Choose the domain you wish to enroll in)"] || "N/A";
-                    document.getElementById('intern-duration').innerText = data.data["Select Internship Duration (Choose your preferred internship duration)"] || "N/A";
-                    document.getElementById('intern-college').innerText = data.data["College/University Name (Please enter the full official name of your inst"] || "N/A";
-                    document.getElementById('intern-email').innerText = data.data["Email Address"] || "N/A";
+                    const sheetData = data.data;
+
+                    // Text Fields Mapping
+                    document.getElementById('intern-name').innerText = sheetData["Full Name (Use CAPITAL LETTERS only)"] || internName;
+                    document.getElementById('intern-personal-email').innerText = sheetData["Personal Email Address"] || "N/A";
+                    document.getElementById('intern-college').innerText = sheetData["College/University Name (Please enter the full official name of your institution)"] || "N/A";
+                    document.getElementById('intern-branch').innerText = sheetData["Branch"] || "N/A";
+                    document.getElementById('intern-college-email').innerText = sheetData["College Email ID (Please enter your official college email address)"] || "N/A";
+                    document.getElementById('intern-domain').innerText = sheetData["Select Your Preferred Internship Domain (Choose the domain you wish to enroll in)"] || "N/A";
+                    document.getElementById('intern-duration').innerText = sheetData["Select Internship Duration (Choose your preferred internship duration)"] || "N/A";
+                    
+                    // Photo Handler (Converts regular Google Drive links into direct displayable image links)
+                    let rawPhotoUrl = sheetData["Upload Student Photograph (Please upload a recent passport-size photograph)"];
+                    if (rawPhotoUrl && rawPhotoUrl.includes("id=")) {
+                        let fileId = rawPhotoUrl.split("id=")[1];
+                        document.getElementById('intern-photo').src = `https://lh3.googleusercontent.com/d/${fileId}`;
+                        document.getElementById('intern-photo').style.display = "inline-block";
+                    }
+
+                    // Social Media Anchors
+                    let linkedin = sheetData["LinkedIn Profile Link (Provide your updated LinkedIn profile URL, if available)"];
+                    if (linkedin && linkedin.trim() !== "" && linkedin !== "N/A") {
+                        document.getElementById('link-linkedin').href = linkedin;
+                        document.getElementById('link-linkedin').style.display = "inline-flex";
+                    }
+
+                    let github = sheetData["GitHub Profile Link (Provide your GitHub profile URL, if available)"];
+                    if (github && github.trim() !== "" && github !== "N/A") {
+                        document.getElementById('link-github').href = github;
+                        document.getElementById('link-github').style.display = "inline-flex";
+                    }
                     
                     document.getElementById('profile-content').style.display = 'block';
                 } else {
-                    document.getElementById('error-message').innerText = "Verification Failed: Profile record not discovered.";
+                    document.getElementById('error-message').innerText = "Verification Failed: Intern record not found.";
                     document.getElementById('error-message').style.display = 'block';
                 }
             })
             .catch(error => {
                 document.getElementById('loader').style.display = 'none';
-                document.getElementById('error-message').innerText = "Network Error: Unable to link with verification nodes.";
+                document.getElementById('error-message').innerText = "Network Error: System connection failed.";
                 document.getElementById('error-message').style.display = 'block';
                 console.error(error);
             });
     } else {
         document.getElementById('loader').style.display = 'none';
-        document.getElementById('error-message').innerText = "Faulty URL: No unique intern identity was specified.";
+        document.getElementById('error-message').innerText = "Invalid URL: No identity token attached.";
         document.getElementById('error-message').style.display = 'block';
     }
 </script>
