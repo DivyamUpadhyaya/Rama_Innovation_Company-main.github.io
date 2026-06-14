@@ -6,29 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intern Verification Profile | Rama Innovation</title>
 
-    <!-- SEO Meta Tags -->
     <meta name="description" content="Verify the internship credentials of Rama Innovation interns.">
     <meta name="author" content="Rama Innovation">
 
-    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Intern Verification Profile | Rama Innovation">
     <meta property="og:description" content="Verify the internship credentials of Rama Innovation interns.">
     <meta property="og:image" content="../assets/images/logo.jpg">
     <meta property="og:url" content="https://www.ramainnovation.co.in/students/profile.html">
     <meta property="og:type" content="website">
 
-    <!-- Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
 
-    <!-- Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
     <link rel="manifest" href="../site.webmanifest">
 
     <style>
-        /* Profile card styling - matches site theme */
         .profile-section {
             padding: 180px 0 100px;
             min-height: 60vh;
@@ -123,7 +118,6 @@
             align-items: center;
             gap: 8px;
             transition: opacity 0.2s ease;
-            cursor: pointer;
         }
 
         .profile-card .btn-profile:hover {
@@ -206,10 +200,6 @@
                     </div>
 
                     <div class="detail-section">
-                        <div class="label">Certificate ID</div>
-                        <div id="intern-certificate-id" class="value">N/A</div>
-                    </div>
-                    <div class="detail-section">
                         <div class="label">Internship Domain</div>
                         <div id="intern-domain" class="value">N/A</div>
                     </div>
@@ -217,7 +207,6 @@
                         <div class="label">Duration</div>
                         <div id="intern-duration" class="value">N/A</div>
                     </div>
-
                     <div class="detail-section">
                         <div class="label">College / University</div>
                         <div id="intern-college" class="value">N/A</div>
@@ -226,20 +215,18 @@
                         <div class="label">Branch</div>
                         <div id="intern-branch" class="value">N/A</div>
                     </div>
-
                     <div class="detail-section">
                         <div class="label">College Email ID</div>
                         <div id="intern-college-email" class="value">N/A</div>
                     </div>
 
-                    <div class="detail-section" style="align-items: center; text-align: center; width: 100%;">
-                        <div class="label">Mentor Feedback</div>
-                        <div class="value" style="font-style: italic; max-width: 90%;">"Successfully completed the internship and demonstrated excellent problem-solving skills."</div>
-                    </div>
-
                     <div class="links-row">
-                        <a id="link-linkedin" class="btn-profile btn-linkedin" href="#" target="_blank" rel="noopener noreferrer" style="display: none;"><i class="fab fa-linkedin-in"></i> LinkedIn Profile</a>
-                        <a id="link-github" class="btn-profile btn-github" href="#" target="_blank" rel="noopener noreferrer" style="display: none;"><i class="fab fa-github"></i> GitHub Profile</a>
+                        <a id="link-linkedin" class="btn-profile btn-linkedin" href="#" target="_blank" rel="noopener noreferrer" style="display: none;">
+                            <i class="fab fa-linkedin-in"></i> LinkedIn Profile
+                        </a>
+                        <a id="link-github" class="btn-profile btn-github" href="#" target="_blank" rel="noopener noreferrer" style="display: none;">
+                            <i class="fab fa-github"></i> GitHub Profile
+                        </a>
                     </div>
                 </div>
 
@@ -262,7 +249,6 @@
                         <a href="#"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
-
                 <div class="footer-col">
                     <h3>Quick Links</h3>
                     <ul>
@@ -273,7 +259,6 @@
                         <li><a href="../join.html">Join Us</a></li>
                     </ul>
                 </div>
-
                 <div class="footer-col">
                     <h3>Services</h3>
                     <ul>
@@ -284,17 +269,15 @@
                         <li><a href="#">UI/UX Design</a></li>
                     </ul>
                 </div>
-
                 <div class="footer-col" id="contact">
                     <h3>Contact Us</h3>
                     <ul>
                         <li><i class="fas fa-map-marker-alt"></i> 94-A Ganesh Marg, Surya Nagar, Gopalpura Road, Jaipur, Rajasthan, India (302015)</li>
-                        <li><i class="fas fa-phone"></i> +91 9462666899 </li>
+                        <li><i class="fas fa-phone"></i> +91 9462666899</li>
                         <li><i class="fas fa-envelope"></i> info@ramainnovation.co.in</li>
                     </ul>
                 </div>
             </div>
-
             <div class="footer-bottom">
                 <p>&copy; <span id="copyright-year">2023</span> Rama Innovation. All Rights Reserved.</p>
                 <div class="footer-links">
@@ -310,6 +293,17 @@
         const urlParams = new URLSearchParams(window.location.search);
         const internName = urlParams.get('intern');
         const scriptUrl = "https://script.google.com/macros/s/AKfycbwzHOLrRl1D3H7kzqoCgTqVIxDAq7c-N2R2fbAZOwNsHJH3jM2S_jJpmfm72CfdJwE2sQ/exec";
+
+        // Strip "Link:" prefix injected by Google Forms, then ensure a full URL
+        function parseUrl(raw, baseUrl) {
+            let val = raw.replace(/^link:\s*/i, '').trim();
+            // If it's already a full URL, return as-is
+            if (/^https?:\/\//i.test(val)) return val;
+            // If it contains the domain without protocol
+            if (val.includes('.com/') || val.includes('.com')) return 'https://' + val;
+            // Otherwise it's a plain username/slug — prepend the base URL
+            return baseUrl + val;
+        }
 
         if (internName) {
             fetch(`${scriptUrl}?intern=${encodeURIComponent(internName)}`)
@@ -355,10 +349,9 @@
                             document.getElementById('intern-duration').innerText = value;
                         }
 
-                        // Cleans hidden "Link:" headers injected by Google Forms
+                        // Photo
                         if (cleanKey.includes("photograph") || cleanKey.includes("photo")) {
                             let fileId = "";
-
                             let cleanUrl = value.replace(/^link:\s*/i, '').trim();
 
                             try {
@@ -372,26 +365,32 @@
                                     if (match) fileId = match[0];
                                 }
                             } catch (e) {
-                                console.error("Error parsing clean photo URL:", e);
+                                console.error("Error parsing photo URL:", e);
                             }
 
                             if (fileId) {
                                 const photo = document.getElementById('intern-photo');
                                 photo.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w500`;
                                 photo.style.display = "inline-block";
-
                                 photo.onerror = function () {
                                     photo.src = `https://drive.google.com/uc?export=view&id=${fileId}`;
                                 };
                             }
                         }
 
+                        // LinkedIn — handles full URL or bare slug
                         if (cleanKey.includes("linkedin")) {
-                            document.getElementById('link-linkedin').href = value.replace(/^link:\s*/i, '').trim();
+                            const linkedinUrl = parseUrl(value, 'https://www.linkedin.com/in/');
+                            console.log("LinkedIn URL:", linkedinUrl);
+                            document.getElementById('link-linkedin').href = linkedinUrl;
                             document.getElementById('link-linkedin').style.display = "inline-flex";
                         }
+
+                        // GitHub — handles full URL or bare username
                         if (cleanKey.includes("github")) {
-                            document.getElementById('link-github').href = value.replace(/^link:\s*/i, '').trim();
+                            const githubUrl = parseUrl(value, 'https://github.com/');
+                            console.log("GitHub URL:", githubUrl);
+                            document.getElementById('link-github').href = githubUrl;
                             document.getElementById('link-github').style.display = "inline-flex";
                         }
                     });
