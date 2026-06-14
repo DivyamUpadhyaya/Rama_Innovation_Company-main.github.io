@@ -3,60 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intern Profile | Rama Innovation</title>
+    <title>Intern Verification | Rama Innovation</title>
+    
     <link rel="stylesheet" href="../css/style.css"> 
+
     <style>
-        .profile-page-container { padding: 80px 20px; background-color: #f8fafc; min-height: 70vh; display: flex; justify-content: center; }
-        .profile-card { background: white; padding: 40px; border-radius: 20px; max-width: 500px; width: 100%; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .profile-photo { width: 140px; height: 140px; border-radius: 12px; object-fit: cover; display: block; margin: 0 auto; }
-        .detail-section { border-top: 1px solid #edf2f7; padding: 12px 0; }
-        .label { font-size: 11px; color: #718096; text-transform: uppercase; font-weight: 700; }
+        /* Container to ensure it fits between header and footer */
+        .page-wrapper { padding: 60px 20px; display: flex; justify-content: center; background-color: #f4f6f9; }
+        
+        .profile-card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 500px; width: 100%; }
+        
+        .photo-container { text-align: center; margin-bottom: 20px; }
+        .profile-photo { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #f4f6f9; }
+        
+        h2 { color: #1a1a1a; margin: 10px 0 5px 0; text-align: center; font-size: 24px; }
+        .verification-status { text-align: center; margin-bottom: 25px; }
+        .status-badge { font-weight: bold; color: #2e7d32; background-color: #e8f5e9; padding: 6px 16px; border-radius: 20px; display: inline-block; font-size: 14px; }
+        
+        .detail-section { border-top: 1px solid #edf2f7; padding: 15px 0; }
+        .label { font-size: 11px; color: #718096; text-transform: uppercase; font-weight: 700; margin-bottom: 5px; }
         .value { font-size: 15px; color: #2d3748; font-weight: 500; }
-        .error { color: #e53e3e; font-weight: bold; text-align: center; }
+        
+        .links-row { display: flex; gap: 15px; margin-top: 25px; justify-content: center; }
+        .btn { padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; }
+        .btn-linkedin { background-color: #0077b5; color: white; }
+        .btn-github { background-color: #24292e; color: white; }
+        
+        .loading { font-style: italic; color: #718096; text-align: center; padding: 40px; }
+        .error { color: #e53e3e; background-color: #fff5f5; padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #fed7d7; }
     </style>
 </head>
 <body>
-    <nav class="navbar"> </nav>
 
-    <div class="profile-page-container">
+    <header class="header">
+        </header>
+
+    <div class="page-wrapper">
         <div class="profile-card">
-            <div id="loader">Verifying credentials...</div>
+            <div id="loader" class="loading">Verifying credentials...</div>
+            
             <div id="profile-content" style="display: none;">
-                <img id="intern-photo" class="profile-photo" src="" alt="Photo">
-                <h2 id="intern-name" style="text-align:center;"></h2>
-                <div class="detail-section"><div class="label">Domain</div><div id="intern-domain" class="value"></div></div>
-                <div class="detail-section"><div class="label">College</div><div id="intern-college" class="value"></div></div>
+                <div class="photo-container">
+                    <img id="intern-photo" class="profile-photo" src="" alt="Intern Photo" style="display: none;">
                 </div>
+                <h2 id="intern-name">Loading...</h2>
+                <div class="verification-status">
+                    <span class="status-badge">✓ Verified Rama Innovation Intern</span>
+                </div>
+                
+                <div class="detail-section"><div class="label">Domain</div><div id="intern-domain" class="value">N/A</div></div>
+                <div class="detail-section"><div class="label">Duration</div><div id="intern-duration" class="value">N/A</div></div>
+                <div class="detail-section"><div class="label">College</div><div id="intern-college" class="value">N/A</div></div>
+                <div class="detail-section"><div class="label">Branch</div><div id="intern-branch" class="value">N/A</div></div>
+                <div class="detail-section"><div class="label">Personal Email</div><div id="intern-personal-email" class="value">N/A</div></div>
+
+                <div class="links-row">
+                    <a id="link-linkedin" class="btn btn-linkedin" href="#" target="_blank" style="display: none;">LinkedIn</a>
+                    <a id="link-github" class="btn btn-github" href="#" target="_blank" style="display: none;">GitHub</a>
+                </div>
+            </div>
+            
             <div id="error-message" class="error" style="display: none;"></div>
         </div>
     </div>
 
+    <footer class="footer">
+        </footer>
+
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const internName = urlParams.get('intern');
-        const scriptUrl = "YOUR_GOOGLE_SCRIPT_URL_HERE"; 
-
-        fetch(`${scriptUrl}?intern=${encodeURIComponent(internName)}`)
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('loader').style.display = 'none';
-                if (data.status !== "success") {
-                    document.getElementById('error-message').innerText = "Intern not found. Please check the name spelling.";
-                    document.getElementById('error-message').style.display = 'block';
-                    return;
-                }
-
-                const s = data.data;
-                // Use .trim().toUpperCase() to ensure matching
-                document.getElementById('intern-name').innerText = s['Full Name'] || 'N/A';
-                document.getElementById('intern-domain').innerText = s['Preferred Internship Domain'] || 'N/A';
-                document.getElementById('intern-college').innerText = s['College/University Name'] || 'N/A';
-                document.getElementById('profile-content').style.display = 'block';
-            })
-            .catch(err => {
-                document.getElementById('error-message').innerText = "Connection failed.";
-                document.getElementById('error-message').style.display = 'block';
-            });
+        // ... (Keep all your existing JavaScript logic here) ...
     </script>
 </body>
 </html>
