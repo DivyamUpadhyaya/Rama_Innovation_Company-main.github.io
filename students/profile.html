@@ -1,51 +1,150 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intern Verification Profile</title>
-    <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; text-align: center; padding: 40px 20px; background-color: #f4f6f9; color: #333; }
-        .profile-card { background: white; padding: 30px; border-radius: 15px; display: inline-block; box-shadow: 0 8px 16px rgba(0,0,0,0.08); max-width: 550px; width: 100%; text-align: left; box-sizing: border-box; }
-        
-        .photo-container { text-align: center; margin-bottom: 20px; }
-        .profile-photo { width: 135px; height: 135px; border-radius: 50%; object-fit: cover; border: 3px solid #2196F3; background-color: #eaeaea; display: inline-block; }
-        
-        h2 { color: #1a1a1a; margin: 10px 0 5px 0; text-align: center; font-size: 24px; }
-        .verification-status { text-align: center; margin-bottom: 25px; }
-        .status-badge { font-weight: bold; color: #2e7d32; background-color: #e8f5e9; padding: 6px 16px; border-radius: 20px; display: inline-block; font-size: 14px; }
-        
-        .detail-section { border-top: 1px solid #edf2f7; padding: 12px 0; display: flex; flex-direction: column; }
-        .label { font-size: 11px; color: #718096; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; letter-spacing: 0.5px; }
-        .value { font-size: 15px; color: #2d3748; font-weight: 500; word-break: break-word; }
-        
-        .links-row { display: flex; gap: 15px; margin-top: 20px; justify-content: center; flex-wrap: wrap; }
-        .btn { padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; }
-        .btn-linkedin { background-color: #0077b5; color: white; }
-        .btn-github { background-color: #24292e; color: white; }
-        
-        .loading { font-style: italic; color: #718096; text-align: center; padding: 20px; }
-        .error { color: #e53e3e; background-color: #fff5f5; padding: 15px; border-radius: 8px; text-align: center; font-weight: bold; border: 1px solid #fed7d7; }
-    </style>
-</head>
 <body>
 
+<!-- HEADER -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* Header */
+.navbar {
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    padding: 15px 0;
+    margin-bottom: 30px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: #222;
+}
+
+.logo span {
+    color: #2196F3;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Footer */
+.footer {
+    background: #1f2937;
+    color: white;
+    margin-top: 50px;
+    padding: 40px 20px 20px;
+}
+
+.footer-grid {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+    gap: 30px;
+    text-align: left;
+}
+
+.footer h3 {
+    margin-bottom: 15px;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer ul li {
+    margin-bottom: 10px;
+}
+
+.footer a {
+    color: #ddd;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #2196F3;
+}
+
+.social-links a {
+    margin-right: 12px;
+    font-size: 18px;
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    margin-top: 25px;
+    padding-top: 15px;
+}
+</style>
+
+<nav class="navbar">
+    <div class="container">
+        <a href="https://www.ramainnovation.co.in" class="logo">
+            Rama<span>Innovation</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="https://www.ramainnovation.co.in">Home</a>
+            <a href="https://www.ramainnovation.co.in/about.html">About</a>
+            <a href="https://www.ramainnovation.co.in/service.html">Services</a>
+            <a href="https://www.ramainnovation.co.in/news.html">News</a>
+            <a href="https://www.ramainnovation.co.in/join.html">Join</a>
+        </div>
+    </div>
+</nav>
+
+<!-- YOUR EXISTING PROFILE CARD STARTS HERE -->
+
 <div class="profile-card">
-    <div id="loader" class="loading">Verifying credentials...</div>
-    
-    <div id="profile-content" style="display: none;">
+
+    <div id="loader" class="loading">
+        Verifying credentials...
+    </div>
+
+    <div id="profile-content" style="display:none;">
+
         <div class="photo-container">
-            <img id="intern-photo" class="profile-photo" src="" alt="Student Photograph" style="display: none;">
+            <img id="intern-photo"
+                 class="profile-photo"
+                 src=""
+                 alt="Student Photograph"
+                 style="display:none;">
         </div>
+
         <h2 id="intern-name">Loading...</h2>
+
         <div class="verification-status">
-            <span class="status-badge">✓ Verified Rama Innovation Intern</span>
+            <span class="status-badge">
+                ✓ Verified Rama Innovation Intern
+            </span>
         </div>
-        
+
         <div class="detail-section">
             <div class="label">Internship Domain</div>
             <div id="intern-domain" class="value">N/A</div>
         </div>
+
         <div class="detail-section">
             <div class="label">Duration</div>
             <div id="intern-duration" class="value">N/A</div>
@@ -55,6 +154,7 @@
             <div class="label">College / University</div>
             <div id="intern-college" class="value">N/A</div>
         </div>
+
         <div class="detail-section">
             <div class="label">Branch</div>
             <div id="intern-branch" class="value">N/A</div>
@@ -64,127 +164,110 @@
             <div class="label">Personal Email Address</div>
             <div id="intern-personal-email" class="value">N/A</div>
         </div>
+
         <div class="detail-section">
             <div class="label">College Email ID</div>
             <div id="intern-college-email" class="value">N/A</div>
         </div>
 
         <div class="links-row">
-            <a id="link-linkedin" class="btn btn-linkedin" href="#" target="_blank" style="display: none;">LinkedIn Profile</a>
-            <a id="link-github" class="btn btn-github" href="#" target="_blank" style="display: none;">GitHub Profile</a>
+            <a id="link-linkedin"
+               class="btn btn-linkedin"
+               href="#"
+               target="_blank"
+               style="display:none;">
+               LinkedIn Profile
+            </a>
+
+            <a id="link-github"
+               class="btn btn-github"
+               href="#"
+               target="_blank"
+               style="display:none;">
+               GitHub Profile
+            </a>
         </div>
+
     </div>
-    
-    <div id="error-message" class="error" style="display: none;"></div>
+
+    <div id="error-message"
+         class="error"
+         style="display:none;">
+    </div>
+
 </div>
 
+<!-- YOUR EXISTING PROFILE CARD ENDS HERE -->
+
+
+<!-- FOOTER -->
+<footer class="footer">
+
+    <div class="footer-grid">
+
+        <div>
+            <h3>Rama Innovation</h3>
+            <p>
+                Innovative solutions for your digital transformation journey.
+            </p>
+
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.linkedin.com/company/rama-innovation/">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+
+        <div>
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="https://www.ramainnovation.co.in">Home</a></li>
+                <li><a href="https://www.ramainnovation.co.in/about.html">About Us</a></li>
+                <li><a href="https://www.ramainnovation.co.in/service.html">Services</a></li>
+                <li><a href="https://www.ramainnovation.co.in/news.html">News</a></li>
+                <li><a href="https://www.ramainnovation.co.in/join.html">Join Us</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Contact Us</h3>
+            <ul>
+                <li>
+                    <i class="fas fa-map-marker-alt"></i>
+                    94-A Ganesh Marg, Surya Nagar,
+                    Gopalpura Road, Jaipur, Rajasthan
+                </li>
+
+                <li>
+                    <i class="fas fa-phone"></i>
+                    +91 9462666899
+                </li>
+
+                <li>
+                    <i class="fas fa-envelope"></i>
+                    info@ramainnovation.co.in
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>
+            © <span id="copyright-year"></span>
+            Rama Innovation. All Rights Reserved.
+        </p>
+    </div>
+
+</footer>
+
 <script>
-const urlParams = new URLSearchParams(window.location.search);
-const internName = urlParams.get('intern');
-const scriptUrl = "https://script.google.com/macros/s/AKfycbwzHOLrRl1D3H7kzqoCgTqVIxDAq7c-N2R2fbAZOwNsHJH3jM2S_jJpmfm72CfdJwE2sQ/exec";
-
-if (internName) {
-    fetch(`${scriptUrl}?intern=${encodeURIComponent(internName)}`)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('loader').style.display = 'none';
-
-            if (data.status !== "success") {
-                document.getElementById('error-message').innerText = data.message || "Verification Failed: Record not found.";
-                document.getElementById('error-message').style.display = 'block';
-                return;
-            }
-
-            const sheetData = data.data;
-            console.log("Returned Data:", sheetData);
-
-            Object.keys(sheetData).forEach(key => {
-                let cleanKey = key.toLowerCase().replace(/\s+/g, ' ').trim();
-                let value = sheetData[key];
-
-                if (value === null || value === undefined || value.toString().trim() === "" || value.toString().toLowerCase() === "n/a") {
-                    return;
-                }
-
-                value = value.toString().trim();
-
-                if (cleanKey.includes("full name")) {
-                    document.getElementById('intern-name').innerText = value;
-                }
-                if (cleanKey.includes("personal email")) {
-                    document.getElementById('intern-personal-email').innerText = value;
-                }
-                if (cleanKey.includes("college/university name")) {
-                    document.getElementById('intern-college').innerText = value;
-                }
-                if (cleanKey === "branch") {
-                    document.getElementById('intern-branch').innerText = value;
-                }
-                if (cleanKey.includes("college email id")) {
-                    document.getElementById('intern-college-email').innerText = value;
-                }
-                if (cleanKey.includes("preferred internship domain")) {
-                    document.getElementById('intern-domain').innerText = value;
-                }
-                if (cleanKey.includes("internship duration")) {
-                    document.getElementById('intern-duration').innerText = value;
-                }
-
-                // FIXED: Cleans hidden "Link:" headers injected by Google Forms
-                if (cleanKey.includes("photograph") || cleanKey.includes("photo")) {
-                    let fileId = "";
-                    
-                    // Force text formatting and clean hidden Form prefixes
-                    let cleanUrl = value.replace(/^link:\s*/i, '').trim();
-                    
-                    try {
-                        if (cleanUrl.includes("id=")) {
-                            let parts = cleanUrl.split("id=")[1];
-                            fileId = parts.includes("&") ? parts.split("&")[0] : parts;
-                        } else if (cleanUrl.includes("/d/")) {
-                            fileId = cleanUrl.split("/d/")[1].split("/")[0];
-                        } else {
-                            let match = cleanUrl.match(/[-\w]{25,}/);
-                            if (match) fileId = match[0];
-                        }
-                    } catch(e) {
-                        console.error("Error parsing clean photo URL:", e);
-                    }
-
-                    if (fileId) {
-                        const photo = document.getElementById('intern-photo');
-                        photo.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w500`;
-                        photo.style.display = "inline-block";
-                        
-                        photo.onerror = function () {
-                            photo.src = `https://drive.google.com/uc?export=view&id=${fileId}`;
-                        };
-                    }
-                }
-
-                if (cleanKey.includes("linkedin")) {
-                    document.getElementById('link-linkedin').href = value.replace(/^link:\s*/i, '').trim();
-                    document.getElementById('link-linkedin').style.display = "inline-flex";
-                }
-                if (cleanKey.includes("github")) {
-                    document.getElementById('link-github').href = value.replace(/^link:\s*/i, '').trim();
-                    document.getElementById('link-github').style.display = "inline-flex";
-                }
-            });
-
-            document.getElementById('profile-content').style.display = 'block';
-        })
-        .catch(error => {
-            console.error(error);
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('error-message').innerText = "Connection Error: Failed to access database.";
-            document.getElementById('error-message').style.display = 'block';
-        });
-} else {
-    document.getElementById('loader').style.display = 'none';
-    document.getElementById('error-message').innerText = "Invalid Request: No intern specified.";
-    document.getElementById('error-message').style.display = 'block';
-}
+document.getElementById("copyright-year").textContent =
+new Date().getFullYear();
 </script>
+
+<!-- KEEP YOUR EXISTING JAVASCRIPT HERE -->
+
 </body>
-</html>
