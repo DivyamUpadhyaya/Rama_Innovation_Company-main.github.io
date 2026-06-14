@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Verification | Rama Innovation</title>
+    
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        .verify-section {
+            padding: 80px 0;
+            background: #f4f7f6;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .verify-card {
+            background: #ffffff;
+            max-width: 600px;
+            width: 90%;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            text-align: center;
+            border-top: 5px solid #0056b3; 
+        }
+        .status-badge {
+            background: #2aa146;
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .verify-card h2 {
+            margin-bottom: 10px;
+            color: #111;
+            font-size: 1.8rem;
+        }
+        .verify-table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        .verify-table th, .verify-table td {
+            padding: 14px;
+            border-bottom: 1px solid #eee;
+            font-size: 1rem;
+        }
+        .verify-table th {
+            color: #666;
+            font-weight: 600;
+            width: 35%;
+        }
+        .verify-table td {
+            color: #111;
+            font-weight: 500;
+        }
+        .loader {
+            font-size: 1.2rem;
+            color: #666;
+            padding: 20px;
+        }
+        .error-box {
+            color: #dc3545;
+            font-weight: 600;
+            padding: 20px;
+        }
+        
+        /* Matching your main site styling overrides */
+        nav ul { display: flex; list-style: none; gap: 25px; }
+        nav ul li a { text-decoration: none; color: #333; font-weight: 500; transition: color 0.3s; }
+        nav ul li a:hover { color: #0056b3; }
+        .footer-cols { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 30px; }
+        .footer-col h3 { margin-bottom: 20px; font-size: 1.2rem; }
+        .footer-col ul { list-style: none; padding: 0; }
+        .footer-col ul li { margin-bottom: 10px; color: #bbb; }
+        .footer-col ul li i { margin-right: 10px; color: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <header style="background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top:0; z-index:1000;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <nav style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0;">
+                <div class="logo">
+                    <a href="index.html" style="font-weight: 700; font-size: 24px; text-decoration: none; color: #111;">Rama Innovation</a>
+                </div>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="service.html">Services</a></li>
+                    <li><a href="internship.html">Internship</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="join.html">Join Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="verify-section">
+        <div class="verify-card">
+            
+            <div id="state-loading" class="loader">
+                <i class="fas fa-spinner fa-spin" style="margin-right: 10px; color: #0056b3;"></i> Securely accessing credential registry...
+            </div>
+            
+            <div id="state-success" style="display: none;">
+                <div class="status-badge"><i class="fas fa-check-circle"></i> Verified Credential</div>
+                <h2>Internship Records Match</h2>
+                <p style="color: #666; font-size: 0.95rem;">This official portal securely validates the internship tenure matching this signature.</p>
+                
+                <table class="verify-table">
+                    <tr><th>Intern Name</th><td id="data-name">-</td></tr>
+                    <tr><th>Intern ID</th><td id="data-id">-</td></tr>
+                    <tr><th>Domain</th><td id="data-domain">-</td></tr>
+                    <tr><th>Duration</th><td id="data-duration">-</td></tr>
+                    <tr><th>Issue Date</th><td id="data-date">-</td></tr>
+                </table>
+            </div>
+
+            <div id="state-error" style="display: none;" class="error-box">
+                <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem; margin-bottom: 15px;"></i>
+                <p style="font-size: 1.1rem; margin-bottom: 5px;">Verification Lookup Failed</p>
+                <span style="font-weight: 400; font-size: 0.9rem; color: #888;">The credential sequence code does not exist or has expired.</span>
+            </div>
+            
+        </div>
+    </section>
+
+    <footer style="background: #111; color: #fff; padding: 60px 0 20px 0; font-family: sans-serif;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div class="footer-cols">
+                <div class="footer-col" style="flex: 1; min-width: 250px;">
+                    <h3 style="color: #fff;">Rama Innovation</h3>
+                    <p style="color: #bbb; line-height: 1.6;">Delivering cutting-edge technology services to help your business grow in the digital age.</p>
+                </div>
+                <div class="footer-col" style="flex: 1; min-width: 250px;">
+                    <h3 style="color: #fff;">Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 94-A Ganesh Marg, Surya Nagar, Gopalpura Road, Jaipur, Rajasthan, India</li>
+                        <li><i class="fas fa-phone"></i> +91 9462666899</li>
+                        <li><i class="fas fa-envelope"></i> info@ramainnovation.in</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 5px; padding-top: 25px; border-top: 1px solid #222; color: #888; font-size: 0.9rem;">
+                <p>&copy; 2026 Rama Innovation. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. PLACE YOUR DEPLOYED WEB APP URL COPIED FROM GOOGLE APPS SCRIPT INSIDE THE QUOTES BELOW:
+        const API_ENDPOINT = "https://script.google.com/macros/s/AKfycbz2Lch2sx2vBaeVOBHwU-QktJUbdUHLfDjV8O7GFoLkGSJeHHu0Px7wnD7pXD3Lp5jTlQ/exec";
+
+        // Read query parameter '?id=xxxx' from page URL address bar
+        const urlParams = new URLSearchParams(window.location.search);
+        const internId = urlParams.get('id');
+
+        if (!internId) {
+            showState('error');
+        } else {
+            // Asynchronously pull rows from Google Sheets API via the web app endpoint
+            fetch(`${API_ENDPOINT}?id=${encodeURIComponent(internId)}`)
+                .then(res => res.json())
+                .then(response => {
+                    if (response.status === "success") {
+                        
+                        // Mapping names inside response.data['HEADER_NAME']. 
+                        // Make sure these match the header labels in Row 1 of your Google Sheet!
+                        document.getElementById('data-name').innerText = response.data['Full Name'] || response.data['Name'] || 'N/A';
+                        document.getElementById('data-id').innerText = internId;
+                        document.getElementById('data-domain').innerText = response.data['Domain'] || response.data['Field'] || 'Intern';
+                        document.getElementById('data-duration').innerText = response.data['Duration'] || 'Complete Tenure';
+                        document.getElementById('data-date').innerText = response.data['Issue Date'] || response.data['Date'] || 'N/A';
+                        
+                        showState('success');
+                    } else {
+                        showState('error');
+                    }
+                })
+                .catch(err => {
+                    console.error("Lookup Fault:", err);
+                    showState('error');
+                });
+        }
+
+        function showState(state) {
+            document.getElementById('state-loading').style.display = 'none';
+            document.getElementById('state-success').style.display = state === 'success' ? 'block' : 'none';
+            document.getElementById('state-error').style.display = state === 'error' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
