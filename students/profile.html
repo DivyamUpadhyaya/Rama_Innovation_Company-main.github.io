@@ -9,7 +9,7 @@
         .profile-card { background: white; padding: 30px; border-radius: 15px; display: inline-block; box-shadow: 0 8px 16px rgba(0,0,0,0.08); max-width: 550px; width: 100%; text-align: left; box-sizing: border-box; }
         
         .photo-container { text-align: center; margin-bottom: 20px; }
-        .profile-photo { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 3px solid #2196F3; background-color: #eaeaea; display: inline-block; }
+        .profile-photo { width: 135px; height: 135px; border-radius: 50%; object-fit: cover; border: 3px solid #2196F3; background-color: #eaeaea; display: inline-block; }
         
         h2 { color: #1a1a1a; margin: 10px 0 5px 0; text-align: center; font-size: 24px; }
         .verification-status { text-align: center; margin-bottom: 25px; }
@@ -92,7 +92,7 @@
                 if (data.status === "success") {
                     const sheetData = data.data;
 
-                    // Header String Mapping matching your spreadsheet text perfectly
+                    // Text Fields Mapping
                     document.getElementById('intern-name').innerText = sheetData["Full Name (Use CAPITAL LETTERS only)"] || internName;
                     document.getElementById('intern-personal-email').innerText = sheetData["Personal Email Address"] || "N/A";
                     document.getElementById('intern-college').innerText = sheetData["College/University Name (Please enter the full official name of your institution)"] || "N/A";
@@ -101,26 +101,38 @@
                     document.getElementById('intern-domain').innerText = sheetData["Select Your Preferred Internship Domain (Choose the domain you wish to enroll in)"] || "N/A";
                     document.getElementById('intern-duration').innerText = sheetData["Select Internship Duration (Choose your preferred internship duration)"] || "N/A";
                     
-                    // Profile Photo Extractor (Converts open Google Form upload URLs into rendering image files)
+                    // Improved Profile Photo Link Extractor
                     let rawPhotoUrl = sheetData["Upload Student Photograph (Please upload a recent passport-size photograph)"];
-                    if (rawPhotoUrl && rawPhotoUrl.includes("id=")) {
-                        let fileId = rawPhotoUrl.split("id=")[1];
-                        document.getElementById('intern-photo').src = `https://docs.google.com/uc?export=view&id=${fileId}`;
-                        document.getElementById('intern-photo').style.display = "inline-block";
+                    if (rawPhotoUrl && rawPhotoUrl.trim() !== "") {
+                        let fileId = "";
+                        if (rawPhotoUrl.includes("id=")) {
+                            fileId = rawPhotoUrl.split("id=")[1].split("&")[0];
+                        } else if (rawPhotoUrl.includes("/d/")) {
+                            fileId = rawPhotoUrl.split("/d/")[1].split("/")[0];
+                        }
+                        
+                        if (fileId) {
+                            document.getElementById('intern-photo').src = `https://docs.google.com/uc?export=view&id=${fileId}`;
+                            document.getElementById('intern-photo').style.display = "inline-block";
+                        }
                     }
 
-                    // Social Link Filters
-                    let linkedin = sheetData["LinkedIn Profile Link (Provide your updated LinkedIn profile URL, if available)"];
-                    if (linkedin && linkedin.trim() !== "" && linkedin !== "N/A") {
-                        document.getElementById('link-linkedin').href = linkedin;
-                        document.getElementById('link-linkedin').style.display = "inline-flex";
-                    }
-
-                    let github = sheetData["GitHub Profile Link (Provide your GitHub profile URL, if available)"];
-                    if (github && github.trim() !== "" && github !== "N/A") {
-                        document.getElementById('link-github').href = github;
-                        document.getElementById('link-github').style.display = "inline-flex";
-                    }
+                    // Flexible Social Link Filters (Matches column names by looking for partial string parts to prevent syntax mismatching)
+                    Object.keys(sheetData).forEach(key => {
+                        let cleanKey = key.toLowerCase();
+                        let value = sheetData[key];
+                        
+                        if (value && value.toString().trim() !== "" && value.toString().toLowerCase() !== "n/a") {
+                            if (cleanKey.includes("linkedin profile link")) {
+                                document.getElementById('link-linkedin').href = value.toString().trim();
+                                document.getElementById('link-linkedin').style.display = "inline-flex";
+                            }
+                            if (cleanKey.includes("github profile link")) {
+                                document.getElementById('link-github').href = value.toString().trim();
+                                document.getElementById('link-github').style.display = "inline-flex";
+                            }
+                        }
+                    });
                     
                     document.getElementById('profile-content').style.display = 'block';
                 } else {
