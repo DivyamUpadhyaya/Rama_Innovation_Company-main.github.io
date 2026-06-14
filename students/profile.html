@@ -306,149 +306,109 @@
     </footer>
 
     <script src="../js/script.js"></script>
-<script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const internName = urlParams.get('intern');
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbwzHOLrRl1D3H7kzqoCgTqVIxDAq7c-N2R2fbAZOwNsHJH3jM2S_jJpmfm72CfdJwE2sQ/exec";
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const internName = urlParams.get('intern');
+        const scriptUrl = "https://script.google.com/macros/s/AKfycbwzHOLrRl1D3H7kzqoCgTqVIxDAq7c-N2R2fbAZOwNsHJH3jM2S_jJpmfm72CfdJwE2sQ/exec";
 
-    function cleanUrl(raw) {
-        return raw
-            .replace(/^link:\s*/i, '')
-            .replace(/[\r\n\t]/g, '')
-            .replace(/\s+/g, '')
-            .trim();
-    }
+        if (internName) {
+            fetch(`${scriptUrl}?intern=${encodeURIComponent(internName)}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('loader').style.display = 'none';
 
-    function ensureProtocol(url) {
-        return /^https?:\/\//i.test(url) ? url : 'https://' + url;
-    }
-
-    // Converts a raw LinkedIn value to a full URL
-    function buildLinkedInUrl(raw) {
-        let val = cleanUrl(raw);
-        // Already a full URL
-        if (val.includes("linkedin.com")) return ensureProtocol(val);
-        // It's just a username/slug like "animesh-jain-388148"
-        return 'https://www.linkedin.com/in/' + val;
-    }
-
-    // Converts a raw GitHub value to a full URL
-    function buildGitHubUrl(raw) {
-        let val = cleanUrl(raw);
-        // Already a full URL
-        if (val.includes("github.com")) return ensureProtocol(val);
-        // It's just a username like "AnimeshJain-29GH"
-        return 'https://github.com/' + val;
-    }
-
-    if (internName) {
-        fetch(`${scriptUrl}?intern=${encodeURIComponent(internName)}`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('loader').style.display = 'none';
-
-                if (data.status !== "success") {
-                    document.getElementById('error-message').innerText = data.message || "Verification Failed: Record not found.";
-                    document.getElementById('error-message').style.display = 'block';
-                    return;
-                }
-
-                const sheetData = data.data;
-                console.log("Returned Data:", sheetData);
-
-                Object.keys(sheetData).forEach(key => {
-                    let cleanKey = key.toLowerCase().replace(/\s+/g, ' ').trim();
-                    let value = sheetData[key];
-
-                    if (value === null || value === undefined || value.toString().trim() === "" || value.toString().toLowerCase() === "n/a") {
+                    if (data.status !== "success") {
+                        document.getElementById('error-message').innerText = data.message || "Verification Failed: Record not found.";
+                        document.getElementById('error-message').style.display = 'block';
                         return;
                     }
 
-                    value = value.toString().trim();
+                    const sheetData = data.data;
+                    console.log("Returned Data:", sheetData);
 
-                    if (cleanKey.includes("full name")) {
-                        document.getElementById('intern-name').innerText = value;
-                    }
-                    if (cleanKey.includes("certificate id")) {
-                        document.getElementById('intern-certificate-id').innerText = value;
-                    }
-                    if (cleanKey.includes("college/university name")) {
-                        document.getElementById('intern-college').innerText = value;
-                    }
-                    if (cleanKey === "branch") {
-                        document.getElementById('intern-branch').innerText = value;
-                    }
-                    if (cleanKey.includes("college email id")) {
-                        document.getElementById('intern-college-email').innerText = value;
-                    }
-                    if (cleanKey.includes("preferred internship domain")) {
-                        document.getElementById('intern-domain').innerText = value;
-                    }
-                    if (cleanKey.includes("internship duration")) {
-                        document.getElementById('intern-duration').innerText = value;
-                    }
+                    Object.keys(sheetData).forEach(key => {
+                        let cleanKey = key.toLowerCase().replace(/\s+/g, ' ').trim();
+                        let value = sheetData[key];
 
-                    // ── Photo ────────────────────────────────────────────
-                    if (cleanKey.includes("photograph") || cleanKey.includes("photo")) {
-                        let fileId = "";
-                        let photoUrl = cleanUrl(value);
+                        if (value === null || value === undefined || value.toString().trim() === "" || value.toString().toLowerCase() === "n/a") {
+                            return;
+                        }
 
-                        try {
-                            if (photoUrl.includes("id=")) {
-                                let parts = photoUrl.split("id=")[1];
-                                fileId = parts.includes("&") ? parts.split("&")[0] : parts;
-                            } else if (photoUrl.includes("/d/")) {
-                                fileId = photoUrl.split("/d/")[1].split("/")[0];
-                            } else {
-                                let match = photoUrl.match(/[-\w]{25,}/);
-                                if (match) fileId = match[0];
+                        value = value.toString().trim();
+
+                        if (cleanKey.includes("full name")) {
+                            document.getElementById('intern-name').innerText = value;
+                        }
+                        if (cleanKey.includes("college/university name")) {
+                            document.getElementById('intern-college').innerText = value;
+                        }
+                        if (cleanKey === "branch") {
+                            document.getElementById('intern-branch').innerText = value;
+                        }
+                        if (cleanKey.includes("college email id")) {
+                            document.getElementById('intern-college-email').innerText = value;
+                        }
+                        if (cleanKey.includes("preferred internship domain")) {
+                            document.getElementById('intern-domain').innerText = value;
+                        }
+                        if (cleanKey.includes("internship duration")) {
+                            document.getElementById('intern-duration').innerText = value;
+                        }
+
+                        // Cleans hidden "Link:" headers injected by Google Forms
+                        if (cleanKey.includes("photograph") || cleanKey.includes("photo")) {
+                            let fileId = "";
+
+                            let cleanUrl = value.replace(/^link:\s*/i, '').trim();
+
+                            try {
+                                if (cleanUrl.includes("id=")) {
+                                    let parts = cleanUrl.split("id=")[1];
+                                    fileId = parts.includes("&") ? parts.split("&")[0] : parts;
+                                } else if (cleanUrl.includes("/d/")) {
+                                    fileId = cleanUrl.split("/d/")[1].split("/")[0];
+                                } else {
+                                    let match = cleanUrl.match(/[-\w]{25,}/);
+                                    if (match) fileId = match[0];
+                                }
+                            } catch (e) {
+                                console.error("Error parsing clean photo URL:", e);
                             }
-                        } catch (e) {
-                            console.error("Error parsing photo URL:", e);
+
+                            if (fileId) {
+                                const photo = document.getElementById('intern-photo');
+                                photo.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w500`;
+                                photo.style.display = "inline-block";
+
+                                photo.onerror = function () {
+                                    photo.src = `https://drive.google.com/uc?export=view&id=${fileId}`;
+                                };
+                            }
                         }
 
-                        if (fileId) {
-                            const photo = document.getElementById('intern-photo');
-                            photo.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w500`;
-                            photo.style.display = "inline-block";
-                            photo.onerror = function () {
-                                photo.src = `https://drive.google.com/uc?export=view&id=${fileId}`;
-                            };
+                        if (cleanKey.includes("linkedin")) {
+                            document.getElementById('link-linkedin').href = value.replace(/^link:\s*/i, '').trim();
+                            document.getElementById('link-linkedin').style.display = "inline-flex";
                         }
-                    }
+                        if (cleanKey.includes("github")) {
+                            document.getElementById('link-github').href = value.replace(/^link:\s*/i, '').trim();
+                            document.getElementById('link-github').style.display = "inline-flex";
+                        }
+                    });
 
-                    // ── LinkedIn ─────────────────────────────────────────
-                    if (cleanKey.includes("linkedin")) {
-                        const linkedinUrl = buildLinkedInUrl(value);
-                        console.log("LinkedIn URL:", linkedinUrl);
-                        const btn = document.getElementById('link-linkedin');
-                        btn.href = linkedinUrl;
-                        btn.style.display = "inline-flex";
-                    }
-
-                    // ── GitHub ───────────────────────────────────────────
-                    if (cleanKey.includes("github")) {
-                        const githubUrl = buildGitHubUrl(value);
-                        console.log("GitHub URL:", githubUrl);
-                        const btn = document.getElementById('link-github');
-                        btn.href = githubUrl;
-                        btn.style.display = "inline-flex";
-                    }
+                    document.getElementById('profile-content').style.display = 'block';
+                })
+                .catch(error => {
+                    console.error(error);
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('error-message').innerText = "Connection Error: Failed to access database.";
+                    document.getElementById('error-message').style.display = 'block';
                 });
-
-                document.getElementById('profile-content').style.display = 'block';
-            })
-            .catch(error => {
-                console.error(error);
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('error-message').innerText = "Connection Error: Failed to access database.";
-                document.getElementById('error-message').style.display = 'block';
-            });
-    } else {
-        document.getElementById('loader').style.display = 'none';
-        document.getElementById('error-message').innerText = "Invalid Request: No intern specified.";
-        document.getElementById('error-message').style.display = 'block';
-    }
-</script>
+        } else {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('error-message').innerText = "Invalid Request: No intern specified.";
+            document.getElementById('error-message').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
