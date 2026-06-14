@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Updates | Rama Innovation</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Rama Innovation offers innovative technology solutions including web development, mobile apps, cloud solutions, and data analytics to help your business thrive in the digital age.">
+    <meta name="keywords" content="Rama Innovation, technology solutions, web development, mobile apps, cloud solutions, data analytics, digital transformation, innovative technology, Jaipur, India">
+    <meta name="author" content="Rama Innovation">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Rama Innovation | Innovative Solutions">
+    <meta property="og:description" content="Delivering cutting-edge technology services to help your business grow in the digital age.">
+    <meta property="og:image" content="./assets/images/logo.jpg">
+    <meta property="og:url" content="https://www.ramainnovation.co.in">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rama Innovation | Innovative Solutions">
+    <meta name="twitter:description" content="We deliver cutting-edge technology services to help your business grow in the digital age.">
+    <meta name="twitter:image" content="./assets/images/logo.jpg">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+
+
+<body>
+  
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Rama<span>Innovation</span></a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="#services">Services</a>
+                <a href="news.html" class="active">News</a>
+                <a href="join.html">Join</a>
+                <a href="#contact" class="cta-button">Contact</a>
+            </div>
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="#services">Services</a>
+        <a href="news.html" class="active">News</a>
+        <a href="join.html">Join</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+    <!-- News Hero Section -->
+    <section class="page-hero news-hero">
+        <div class="container">
+            <h1 class="animate-slide-up">Tech <span>News</span></h1>
+            <p class="animate-slide-up delay-1">Stay updated with the latest industry trends, company updates, and technology insights.</p>
+        </div>
+    </section>
+
+    <!-- News Categories -->
+<!-- News Section with Custom Articles and API Content -->
+<section class="news-api-section">
+    <div class="container">
+        <div class="news-header">
+            <h2 class="section-title">Latest <span>News</span></h2>
+            <div class="news-controls">
+                <div class="search-box">
+                    <input type="text" id="news-search" placeholder="Search news...">
+                    <button id="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="category-filter">
+                    <select id="news-category">
+                        <option value="all">All Categories</option>
+                        <option value="company">Company</option>
+                        <option value="tech">Technology</option>
+                        <option value="business">Business</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom News Articles -->
+        <div class="news-grid">
+            <!-- Article 1 -->
+            <article class="news-card animate-slide-up delay-1" data-category="company">
+                <div class="news-card-header">
+                    <span class="news-category company">Company Update</span>
+                    <span class="news-date">June 15, 2022</span>
+                </div>
+                <div class="news-card-image">
+                    <img src="./assets/images/company_office.jpg" alt="Rama Innovation Expansion">
+                </div>
+                <div class="news-card-content">
+                    <h3>Rama Innovation Announces Office in Jaipur</h3>
+                    <p>We're excited to announce the opening of our new Jaipur headquarters in Jaipur, Rajasthan, marking a significant milestone in our Rajasthan expansion.</p>
+                </div>
+            </article>
+
+            <!-- Article 2 -->
+            <article class="news-card animate-slide-up delay-2" data-category="tech">
+                <div class="news-card-header">
+                    <span class="news-category tech">Tech Trends</span>
+                    <span class="news-date">June 10, 2023</span>
+                </div>
+                <div class="news-card-image">
+                    <img src="./assets/images/ai.jpg" alt="AI Innovation">
+                </div>
+                <div class="news-card-content">
+                    <h3>The Future of AI in Enterprise Solutions</h3>
+                    <p>How artificial intelligence is transforming business operations and what it means for your organization's digital strategy.</p>
+                </div>
+            </article>
+            <article class="news-card animate-slide-up delay-3" data-category="events">
+<div class="news-card-header">
+<span class="news-category events">Events</span>
+<span class="news-date">May 28, 2023</span>
+</div>
+<div class="news-card-image">
+<img src="./assets/images/company_office.jpg" alt="Tech Conference">
+</div>
+<div class="news-card-content">
+<h3>Rama Innovation to Host Annual Developer Conference</h3>
+<p>Join us for DevCon 2023 featuring workshops, keynote speakers, and networking opportunities for tech professionals.</p>
+<!-- <a href="news-single.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a> -->
+</div>
+</article>
+        </div>
+
+        <!-- API-Powered News Section -->
+        <div class="api-news-section">
+            <h3 class="api-news-title">Tech Industry News from <span>TechCrunch</span></h3>
+            
+            <div class="loading-spinner" id="loading-spinner">
+                <div class="spinner"></div>
+                <p>Loading tech news...</p>
+            </div>
+
+            <div class="news-grid" id="api-news-grid">
+                <!-- News articles will be inserted here by JavaScript -->
+            </div>
+
+            <div class="pagination">
+                <button id="prev-page" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+                <div class="page-info">
+                    <span id="current-page">1</span> of <span id="total-pages">1</span>
+                </div>
+                <button id="next-page">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Newsletter Section -->
+    <section class="newsletter news-newsletter">
+        <div class="container">
+            <div class="newsletter-content animate-slide-up">
+                <h2>Stay Updated</h2>
+                <p>Subscribe to our newsletter for the latest news and insights delivered to your inbox.</p>
+            </div>
+            <form class="newsletter-form animate-slide-up delay-1">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit" class="cta-button news_letter_btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Rama Innovation</h3>
+                    <p>Innovative solutions for your digital transformation journey.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/company/rama-innovation/"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="news.html">News</a></li>
+                        <li><a href="join.html">Join Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">Mobile Apps</a></li>
+                        <li><a href="#">Cloud Solutions</a></li>
+                        <li><a href="#">Data Analytics</a></li>
+                        <li><a href="#">UI/UX Design</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col" id="contact">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 94-A Ganesh Marg, Surya Nagar, Gopalpura Road, Jaipur, Rajasthan, India (302015)</li>
+                        <li><i class="fas fa-phone"></i> +91 9462666899 </li>
+                        <li><i class="fas fa-envelope"></i> info@ramainnovation.co.in</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <span id="copyright-year">2023</span> Rama Innovation. All Rights Reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./js/script.js"></script>
+    <script>
+        // News API Implementation
+document.addEventListener('DOMContentLoaded', function() {
+    const apiKey = 'c59c52a98a6942fc9f4f9d5d354f9bc2';
+    const apiNewsGrid = document.getElementById('api-news-grid');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const prevPageBtn = document.getElementById('prev-page');
+    const nextPageBtn = document.getElementById('next-page');
+    const currentPageEl = document.getElementById('current-page');
+    const totalPagesEl = document.getElementById('total-pages');
+    const newsSearch = document.getElementById('news-search');
+    const searchBtn = document.getElementById('search-btn');
+    const newsCategory = document.getElementById('news-category');
+    
+    let currentPage = 1;
+    let totalPages = 1;
+    let currentArticles = [];
+    let currentQuery = '';
+    let currentCategory = 'all';
+
+    // Fetch news from API
+    async function fetchNews(page = 1, query = '', category = 'all') {
+        try {
+            loadingSpinner.style.display = 'flex';
+            apiNewsGrid.innerHTML = '';
+            
+            let url = `https://newsapi.org/v2/top-headlines?sources=techcrunch&pageSize=6&page=${page}&apiKey=${apiKey}`;
+            
+            if (query) {
+                url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&sources=techcrunch&pageSize=6&page=${page}&apiKey=${apiKey}`;
+            }
+            
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            if (data.status === 'ok') {
+                currentArticles = data.articles;
+                totalPages = Math.ceil(data.totalResults / 6);
+                currentPage = page;
+                currentQuery = query;
+                
+                displayApiNews(currentArticles);
+                updatePagination();
+            } else {
+                throw new Error(data.message || 'Failed to fetch news');
+            }
+        } catch (error) {
+            console.error('Error fetching news:', error);
+            apiNewsGrid.innerHTML = `
+                <div class="error-message">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Failed to load tech news. Please try again later.</p>
+                    <button class="retry-btn">Retry</button>
+                </div>
+            `;
+            
+            document.querySelector('.retry-btn')?.addEventListener('click', () => {
+                fetchNews(currentPage, currentQuery, currentCategory);
+            });
+        } finally {
+            loadingSpinner.style.display = 'none';
+        }
+    }
+
+    // Display API news articles
+    function displayApiNews(articles) {
+        if (articles.length === 0) {
+            apiNewsGrid.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-newspaper"></i>
+                    <p>No tech news articles found. Try a different search.</p>
+                </div>
+            `;
+            return;
+        }
+        
+        apiNewsGrid.innerHTML = articles.map(article => `
+            <article class="news-card" data-category="tech">
+                <div class="news-card-header">
+                    <span class="news-category tech">TechCrunch</span>
+                    <span class="news-date">${new Date(article.publishedAt).toLocaleDateString()}</span>
+                </div>
+                <div class="news-card-image">
+                    <img src="${article.urlToImage || './assets/images/cloud.jpg'}" alt="${article.title}">
+                </div>
+                <div class="news-card-content">
+                    <h3>${article.title}</h3>
+                    <p>${article.description || 'No description available'}</p>
+                    <a href="${article.url}" target="_blank" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+        `).join('');
+    }
+
+    // Update pagination controls
+    function updatePagination() {
+        currentPageEl.textContent = currentPage;
+        totalPagesEl.textContent = totalPages;
+        
+        prevPageBtn.disabled = currentPage <= 1;
+        nextPageBtn.disabled = currentPage >= totalPages;
+    }
+
+    // Event listeners for API news section
+    prevPageBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+            fetchNews(currentPage - 1, currentQuery, currentCategory);
+        }
+    });
+
+    nextPageBtn.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+            fetchNews(currentPage + 1, currentQuery, currentCategory);
+        }
+    });
+
+    searchBtn.addEventListener('click', () => {
+        const query = newsSearch.value.trim();
+        fetchNews(1, query, currentCategory);
+    });
+
+    newsSearch.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            const query = newsSearch.value.trim();
+            fetchNews(1, query, currentCategory);
+        }
+    });
+
+    newsCategory.addEventListener('change', () => {
+        currentCategory = newsCategory.value;
+        filterAllNews();
+    });
+
+    // Filter all news (both custom and API)
+    function filterAllNews() {
+        if (currentCategory === 'all') {
+            document.querySelectorAll('.news-card').forEach(card => {
+                card.style.display = 'block';
+            });
+            return;
+        }
+        
+        document.querySelectorAll('.news-card').forEach(card => {
+            if (card.dataset.category === currentCategory) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Initial fetch
+    fetchNews();
+});
+    </script>
+</body>
+</html>
