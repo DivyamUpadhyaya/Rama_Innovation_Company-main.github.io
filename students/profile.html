@@ -231,9 +231,9 @@
                         <div id="intern-college-email" class="value">N/A</div>
                     </div>
 
-                    <div class="detail-section">
+                    <div class="detail-section" style="align-items: center; text-align: center; width: 100%;">
                         <div class="label">Mentor Feedback</div>
-                        <div class="value">"Successfully completed the internship and demonstrated excellent problem-solving skills."</div>
+                        <div class="value" style="font-style: italic; max-width: 90%;">"Successfully completed the internship and demonstrated excellent problem-solving skills."</div>
                     </div>
 
                     <div class="links-row">
@@ -389,11 +389,19 @@
                         }
 
                         if (cleanKey.includes("linkedin")) {
-                            document.getElementById('link-linkedin').href = value.replace(/^link:\s*/i, '').trim();
+                            let linkedinUrl = value.replace(/^link:\s*/i, '').trim();
+                            if (!/^https?:\/\//i.test(linkedinUrl)) {
+                                linkedinUrl = 'https://' + linkedinUrl;
+                            }
+                            document.getElementById('link-linkedin').href = linkedinUrl;
                             document.getElementById('link-linkedin').style.display = "inline-flex";
                         }
                         if (cleanKey.includes("github")) {
-                            document.getElementById('link-github').href = value.replace(/^link:\s*/i, '').trim();
+                            let githubUrl = value.replace(/^link:\s*/i, '').trim();
+                            if (!/^https?:\/\//i.test(githubUrl)) {
+                                githubUrl = 'https://' + githubUrl;
+                            }
+                            document.getElementById('link-github').href = githubUrl;
                             document.getElementById('link-github').style.display = "inline-flex";
                         }
                     });
