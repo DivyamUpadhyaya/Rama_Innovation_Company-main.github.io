@@ -81,183 +81,114 @@
 <script>
 const urlParams = new URLSearchParams(window.location.search);
 const internName = urlParams.get('intern');
-
 const scriptUrl = "https://script.google.com/macros/s/AKfycbwzHOLrRl1D3H7kzqoCgTqVIxDAq7c-N2R2fbAZOwNsHJH3jM2S_jJpmfm72CfdJwE2sQ/exec";
 
 if (internName) {
-
     fetch(`${scriptUrl}?intern=${encodeURIComponent(internName)}`)
         .then(response => response.json())
         .then(data => {
-
             document.getElementById('loader').style.display = 'none';
 
             if (data.status !== "success") {
-                document.getElementById('error-message').innerText =
-                    data.message || "Verification Failed: Record not found.";
+                document.getElementById('error-message').innerText = data.message || "Verification Failed: Record not found.";
                 document.getElementById('error-message').style.display = 'block';
                 return;
             }
 
             const sheetData = data.data;
-
             console.log("Returned Data:", sheetData);
 
             Object.keys(sheetData).forEach(key => {
-
                 let cleanKey = key.toLowerCase().replace(/\s+/g, ' ').trim();
                 let value = sheetData[key];
 
-                if (
-                    value === null ||
-                    value === undefined ||
-                    value.toString().trim() === "" ||
-                    value.toString().toLowerCase() === "n/a"
-                ) {
+                if (value === null || value === undefined || value.toString().trim() === "" || value.toString().toLowerCase() === "n/a") {
                     return;
                 }
 
                 value = value.toString().trim();
 
-                // Full Name
+                // 1. Name Check
                 if (cleanKey.includes("full name")) {
                     document.getElementById('intern-name').innerText = value;
                 }
-
-                // Personal Email
-                else if (
-                    cleanKey.includes("personal email")
-                ) {
+                
+                // 2. Personal Email Check
+                if (cleanKey.includes("personal email")) {
                     document.getElementById('intern-personal-email').innerText = value;
                 }
 
-                // College
-                else if (
-                    cleanKey.includes("college/university") ||
-                    cleanKey.includes("university name")
-                ) {
+                // 3. College Check
+                if (cleanKey.includes("college/university name")) {
                     document.getElementById('intern-college').innerText = value;
                 }
 
-                // Branch
-                else if (
-                    cleanKey.includes("branch")
-                ) {
+                // 4. Branch Check
+                if (cleanKey === "branch") {
                     document.getElementById('intern-branch').innerText = value;
                 }
 
-                // College Email
-                else if (
-                    cleanKey.includes("college email")
-                ) {
+                // 5. College Email Check
+                if (cleanKey.includes("college email id")) {
                     document.getElementById('intern-college-email').innerText = value;
                 }
 
-                // Internship Domain
-                else if (
-                    cleanKey.includes("internship domain")
-                ) {
+                // 6. Domain Check
+                if (cleanKey.includes("preferred internship domain")) {
                     document.getElementById('intern-domain').innerText = value;
                 }
 
-                // Duration
-                else if (
-                    cleanKey.includes("internship duration")
-                ) {
+                // 7. Duration Check
+                if (cleanKey.includes("internship duration")) {
                     document.getElementById('intern-duration').innerText = value;
                 }
 
-                // Student Photograph
-                else if (
-                    cleanKey.includes("photograph") ||
-                    cleanKey.includes("photo")
-                ) {
-
+                // 8. Photo Engine Setup
+                if (cleanKey.includes("student photograph")) {
                     let fileId = "";
-
                     if (value.includes("id=")) {
                         fileId = value.split("id=")[1].split("&")[0];
-                    }
-                    else if (value.includes("/d/")) {
+                    } else if (value.includes("/d/")) {
                         fileId = value.split("/d/")[1].split("/")[0];
-                    }
-                    else {
+                    } else {
                         let match = value.match(/[-\w]{25,}/);
-                        if (match) {
-                            fileId = match[0];
-                        }
+                        if (match) fileId = match[0];
                     }
-
-                    console.log("Photo File ID:", fileId);
 
                     if (fileId) {
-
                         const photo = document.getElementById('intern-photo');
-
-                        photo.src =
-                            `https://drive.google.com/thumbnail?id=${fileId}&sz=w500`;
-
+                        // Use uc?export=view layout to override Drive preview authorization blocks
+                        photo.src = `https://docs.google.com/uc?export=view&id=${fileId}`;
                         photo.style.display = "inline-block";
-
-                        photo.onerror = function () {
-                            console.log("Photo could not be loaded.");
-                            photo.style.display = "none";
-                        };
                     }
                 }
 
-                // LinkedIn
-                else if (
-                    cleanKey.includes("linkedin")
-                ) {
-
-                    const linkedinBtn =
-                        document.getElementById('link-linkedin');
-
+                // 9. LinkedIn Dynamic Router
+                if (cleanKey.includes("linkedin profile link")) {
+                    const linkedinBtn = document.getElementById('link-linkedin');
                     linkedinBtn.href = value;
                     linkedinBtn.style.display = "inline-flex";
-
-                    console.log("LinkedIn:", value);
                 }
 
-                // GitHub
-                else if (
-                    cleanKey.includes("github")
-                ) {
-
-                    const githubBtn =
-                        document.getElementById('link-github');
-
+                // 10. GitHub Dynamic Router
+                if (cleanKey.includes("github profile link")) {
+                    const githubBtn = document.getElementById('link-github');
                     githubBtn.href = value;
                     githubBtn.style.display = "inline-flex";
-
-                    console.log("GitHub:", value);
                 }
-
             });
 
             document.getElementById('profile-content').style.display = 'block';
-
         })
         .catch(error => {
-
             console.error(error);
-
             document.getElementById('loader').style.display = 'none';
-
-            document.getElementById('error-message').innerText =
-                "Connection Error: Failed to access database.";
-
+            document.getElementById('error-message').innerText = "Connection Error: Failed to access database.";
             document.getElementById('error-message').style.display = 'block';
         });
-
 } else {
-
     document.getElementById('loader').style.display = 'none';
-
-    document.getElementById('error-message').innerText =
-        "Invalid Request: No intern specified.";
-
+    document.getElementById('error-message').innerText = "Invalid Request: No intern specified.";
     document.getElementById('error-message').style.display = 'block';
 }
 </script>
