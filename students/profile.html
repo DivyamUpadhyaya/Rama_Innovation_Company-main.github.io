@@ -108,70 +108,58 @@ if (internName) {
 
                 value = value.toString().trim();
 
-                // 1. Name Check
                 if (cleanKey.includes("full name")) {
                     document.getElementById('intern-name').innerText = value;
                 }
-                
-                // 2. Personal Email Check
                 if (cleanKey.includes("personal email")) {
                     document.getElementById('intern-personal-email').innerText = value;
                 }
-
-                // 3. College Check
                 if (cleanKey.includes("college/university name")) {
                     document.getElementById('intern-college').innerText = value;
                 }
-
-                // 4. Branch Check
                 if (cleanKey === "branch") {
                     document.getElementById('intern-branch').innerText = value;
                 }
-
-                // 5. College Email Check
                 if (cleanKey.includes("college email id")) {
                     document.getElementById('intern-college-email').innerText = value;
                 }
-
-                // 6. Domain Check
                 if (cleanKey.includes("preferred internship domain")) {
                     document.getElementById('intern-domain').innerText = value;
                 }
-
-                // 7. Duration Check
                 if (cleanKey.includes("internship duration")) {
                     document.getElementById('intern-duration').innerText = value;
                 }
 
-                // 8. Photo Engine Setup
-                if (cleanKey.includes("student photograph")) {
+                // Updated bulletproof Photo URL Parser
+                if (cleanKey.includes("photograph") || cleanKey.includes("photo")) {
                     let fileId = "";
-                    if (value.includes("id=")) {
-                        fileId = value.split("id=")[1].split("&")[0];
-                    } else if (value.includes("/d/")) {
-                        fileId = value.split("/d/")[1].split("/")[0];
-                    } else {
-                        let match = value.match(/[-\w]{25,}/);
-                        if (match) fileId = match[0];
+                    try {
+                        if (value.includes("id=")) {
+                            let parts = value.split("id=")[1];
+                            fileId = parts.includes("&") ? parts.split("&")[0] : parts;
+                        } else if (value.includes("/d/")) {
+                            fileId = value.split("/d/")[1].split("/")[0];
+                        } else {
+                            let match = value.match(/[-\w]{25,}/);
+                            if (match) fileId = match[0];
+                        }
+                    } catch(e) {
+                        console.error("Error parsing photo URL layouts:", e);
                     }
 
                     if (fileId) {
                         const photo = document.getElementById('intern-photo');
-                        // Use uc?export=view layout to override Drive preview authorization blocks
-                        photo.src = `https://docs.google.com/uc?export=view&id=${fileId}`;
+                        photo.src = `https://drive.google.com/uc?export=view&id=${fileId}`;
                         photo.style.display = "inline-block";
                     }
                 }
 
-                // 9. LinkedIn Dynamic Router
-                if (cleanKey.includes("linkedin profile link")) {
+                if (cleanKey.includes("linkedin")) {
                     const linkedinBtn = document.getElementById('link-linkedin');
                     linkedinBtn.href = value;
                     linkedinBtn.style.display = "inline-flex";
                 }
-
-                // 10. GitHub Dynamic Router
-                if (cleanKey.includes("github profile link")) {
+                if (cleanKey.includes("github")) {
                     const githubBtn = document.getElementById('link-github');
                     githubBtn.href = value;
                     githubBtn.style.display = "inline-flex";
