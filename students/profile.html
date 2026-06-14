@@ -130,45 +130,45 @@ if (internName) {
                     document.getElementById('intern-duration').innerText = value;
                 }
 
-                // Updated web-optimized proxy bypass layout
+                // FIXED: Cleans hidden "Link:" headers injected by Google Forms
                 if (cleanKey.includes("photograph") || cleanKey.includes("photo")) {
                     let fileId = "";
+                    
+                    // Force text formatting and clean hidden Form prefixes
+                    let cleanUrl = value.replace(/^link:\s*/i, '').trim();
+                    
                     try {
-                        if (value.includes("id=")) {
-                            let parts = value.split("id=")[1];
+                        if (cleanUrl.includes("id=")) {
+                            let parts = cleanUrl.split("id=")[1];
                             fileId = parts.includes("&") ? parts.split("&")[0] : parts;
-                        } else if (value.includes("/d/")) {
-                            fileId = value.split("/d/")[1].split("/")[0];
+                        } else if (cleanUrl.includes("/d/")) {
+                            fileId = cleanUrl.split("/d/")[1].split("/")[0];
                         } else {
-                            let match = value.match(/[-\w]{25,}/);
+                            let match = cleanUrl.match(/[-\w]{25,}/);
                             if (match) fileId = match[0];
                         }
                     } catch(e) {
-                        console.error("Error parsing photo URL layouts:", e);
+                        console.error("Error parsing clean photo URL:", e);
                     }
 
                     if (fileId) {
                         const photo = document.getElementById('intern-photo');
-                        // Pull pre-rendered proxy format stream to bypass Form blocks
                         photo.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w500`;
                         photo.style.display = "inline-block";
                         
                         photo.onerror = function () {
-                            console.warn("High-res proxy blocked. Trying standard fallback path...");
                             photo.src = `https://drive.google.com/uc?export=view&id=${fileId}`;
                         };
                     }
                 }
 
                 if (cleanKey.includes("linkedin")) {
-                    const linkedinBtn = document.getElementById('link-linkedin');
-                    linkedinBtn.href = value;
-                    linkedinBtn.style.display = "inline-flex";
+                    document.getElementById('link-linkedin').href = value.replace(/^link:\s*/i, '').trim();
+                    document.getElementById('link-linkedin').style.display = "inline-flex";
                 }
                 if (cleanKey.includes("github")) {
-                    const githubBtn = document.getElementById('link-github');
-                    githubBtn.href = value;
-                    githubBtn.style.display = "inline-flex";
+                    document.getElementById('link-github').href = value.replace(/^link:\s*/i, '').trim();
+                    document.getElementById('link-github').style.display = "inline-flex";
                 }
             });
 
