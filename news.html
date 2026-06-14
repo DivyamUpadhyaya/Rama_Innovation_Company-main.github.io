@@ -98,52 +98,49 @@
             </div>
         </div>
 
-        <!-- Custom News Articles -->
         <div class="news-grid">
-            <!-- Article 1 -->
-            <article class="news-card animate-slide-up delay-1" data-category="company">
-                <div class="news-card-header">
-                    <span class="news-category company">Company Update</span>
-                    <span class="news-date">June 15, 2022</span>
-                </div>
-                <div class="news-card-image">
-                    <img src="./assets/images/company_office.jpg" alt="Rama Innovation Expansion">
-                </div>
-                <div class="news-card-content">
-                    <h3>Rama Innovation Announces Office in Jaipur</h3>
-                    <p>We're excited to announce the opening of our new Jaipur headquarters in Jaipur, Rajasthan, marking a significant milestone in our Rajasthan expansion.</p>
-                </div>
-            </article>
-
-            <!-- Article 2 -->
-            <article class="news-card animate-slide-up delay-2" data-category="tech">
-                <div class="news-card-header">
-                    <span class="news-category tech">Tech Trends</span>
-                    <span class="news-date">June 10, 2023</span>
-                </div>
-                <div class="news-card-image">
-                    <img src="./assets/images/ai.jpg" alt="AI Innovation">
-                </div>
-                <div class="news-card-content">
-                    <h3>The Future of AI in Enterprise Solutions</h3>
-                    <p>How artificial intelligence is transforming business operations and what it means for your organization's digital strategy.</p>
-                </div>
-            </article>
-            <article class="news-card animate-slide-up delay-3" data-category="events">
-<div class="news-card-header">
-<span class="news-category events">Events</span>
-<span class="news-date">May 28, 2023</span>
-</div>
-<div class="news-card-image">
-<img src="./assets/images/company_office.jpg" alt="Tech Conference">
-</div>
-<div class="news-card-content">
-<h3>Rama Innovation to Host Annual Developer Conference</h3>
-<p>Join us for DevCon 2023 featuring workshops, keynote speakers, and networking opportunities for tech professionals.</p>
-<!-- <a href="news-single.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a> -->
-</div>
-</article>
+    <article class="news-card animate-slide-up delay-1" data-category="company">
+        <div class="news-card-header">
+            <span class="news-category company">Company Update</span>
+            <span class="news-date">June 14, 2026</span>
         </div>
+        <div class="news-card-image">
+            <img src="./assets/images/company_office.jpg" alt="Rama Innovation Expansion">
+        </div>
+        <div class="news-card-content">
+            <h3>Celebrating 4 Years of Digital Excellence in Jaipur</h3>
+            <p>As we mark our fourth anniversary, Rama Innovation continues to empower local and global enterprises with cutting-edge cloud and data analytics solutions.</p>
+        </div>
+    </article>
+
+    <article class="news-card animate-slide-up delay-2" data-category="tech">
+        <div class="news-card-header">
+            <span class="news-category tech">Tech Trends</span>
+            <span class="news-date">June 08, 2026</span>
+        </div>
+        <div class="news-card-image">
+            <img src="./assets/images/ai.jpg" alt="AI Integration">
+        </div>
+        <div class="news-card-content">
+            <h3>Integrating Generative AI into Enterprise Workflows</h3>
+            <p>Our team is spearheading new ways for businesses to leverage custom AI models to automate operations and improve decision-making accuracy.</p>
+        </div>
+    </article>
+
+    <article class="news-card animate-slide-up delay-3" data-category="events">
+        <div class="news-card-header">
+            <span class="news-category events">Events</span>
+            <span class="news-date">June 20, 2026</span>
+        </div>
+        <div class="news-card-image">
+            <img src="./assets/images/company_office.jpg" alt="Tech Conference">
+        </div>
+        <div class="news-card-content">
+            <h3>Join Us for the 2026 Tech Summit in Jaipur</h3>
+            <p>Rama Innovation is proud to sponsor the upcoming Tech Summit, focusing on the future of sustainable digital infrastructure and next-gen development.</p>
+        </div>
+    </article>
+</div>
 
         <!-- API-Powered News Section -->
         <div class="api-news-section">
@@ -240,158 +237,59 @@
 
     <script src="./js/script.js"></script>
     <script>
-        // News API Implementation
+       
+const techNews = [
+    { title: "Apple Announces New AI Integration in iOS 18", date: "June 14, 2026", desc: "Apple unveiled its new AI-driven features, focused on privacy and user productivity." },
+    { title: "NVIDIA Stock Hits New Record High", date: "June 13, 2026", desc: "The semiconductor giant continues to dominate the AI hardware market." },
+    { title: "Microsoft Updates Copilot for Enterprise", date: "June 12, 2026", desc: "New features aim to streamline workflows in Office 365 environments." },
+    { title: "The Rise of Quantum Computing in 2026", date: "June 12, 2026", desc: "Recent breakthroughs in stability suggest quantum computers are nearing commercial viability." },
+    { title: "Google Cloud Expands Data Centers in India", date: "June 11, 2026", desc: "Investment aimed at supporting the growing digital infrastructure in the region." },
+    { title: "OpenAI Previews Next-Gen Model", date: "June 10, 2026", desc: "Early benchmarks show significant improvements in reasoning capabilities." },
+    { title: "Meta Launches New VR Headset Prototype", date: "June 09, 2026", desc: "Focuses on mixed reality capabilities for industrial design applications." },
+    { title: "Cybersecurity Trends: The Post-Quantum Era", date: "June 08, 2026", desc: "How companies are prepping their encryption for future threats." },
+    { title: "Sustainable Tech: New Recycling Methods", date: "June 07, 2026", desc: "Innovations in e-waste management for large tech manufacturers." },
+    { title: "SpaceX Successful Satellite Deployment", date: "June 06, 2026", desc: "Expanding global internet coverage via high-speed satellite links." },
+    { title: "The Impact of 6G Research on Telecom", date: "June 05, 2026", desc: "Leading researchers discuss the future of connectivity standards." },
+    { title: "Automated Coding Assistants Gain Traction", date: "June 04, 2026", desc: "How developers are integrating AI tools into their daily workflows." },
+    { title: "EV Battery Efficiency Breakthrough", date: "June 03, 2026", desc: "New materials allow for faster charging and longer ranges." },
+    { title: "Blockchain for Supply Chain Transparency", date: "June 02, 2026", desc: "New pilot programs launched by global retailers." },
+    { title: "AI Ethics: New Regulations Proposed", date: "June 01, 2026", desc: "Policy makers debate the future of generative AI frameworks." },
+    { title: "New Lightweight Framework for Web Apps", date: "May 31, 2026", desc: "Engineers release a tool promising 50% faster load times." },
+    { title: "Wearable Tech: Future of Health Monitoring", date: "May 30, 2026", desc: "New sensors capable of real-time blood analysis." },
+    { title: "Robotics in Agriculture: Jaipur Pilot", date: "May 29, 2026", desc: "How automated drones are optimizing crop yields in Rajasthan." },
+    { title: "Digital Payments Security Updates", date: "May 28, 2026", desc: "New protocols to prevent unauthorized digital transactions." },
+    { title: "Software Architecture Trends for 2027", date: "May 27, 2026", desc: "Industry leaders predict a shift towards decentralized architectures." }
+];
+
 document.addEventListener('DOMContentLoaded', function() {
-    const apiKey = 'c59c52a98a6942fc9f4f9d5d354f9bc2';
     const apiNewsGrid = document.getElementById('api-news-grid');
-    const loadingSpinner = document.getElementById('loading-spinner');
-    const prevPageBtn = document.getElementById('prev-page');
-    const nextPageBtn = document.getElementById('next-page');
-    const currentPageEl = document.getElementById('current-page');
-    const totalPagesEl = document.getElementById('total-pages');
     const newsSearch = document.getElementById('news-search');
     const searchBtn = document.getElementById('search-btn');
-    const newsCategory = document.getElementById('news-category');
-    
-    let currentPage = 1;
-    let totalPages = 1;
-    let currentArticles = [];
-    let currentQuery = '';
-    let currentCategory = 'all';
 
-    // Fetch news from API
-    async function fetchNews(page = 1, query = '', category = 'all') {
-        try {
-            loadingSpinner.style.display = 'flex';
-            apiNewsGrid.innerHTML = '';
-            
-            let url = `https://newsapi.org/v2/top-headlines?sources=techcrunch&pageSize=6&page=${page}&apiKey=${apiKey}`;
-            
-            if (query) {
-                url = `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&sources=techcrunch&pageSize=6&page=${page}&apiKey=${apiKey}`;
-            }
-            
-            const response = await fetch(url);
-            const data = await response.json();
-            
-            if (data.status === 'ok') {
-                currentArticles = data.articles;
-                totalPages = Math.ceil(data.totalResults / 6);
-                currentPage = page;
-                currentQuery = query;
-                
-                displayApiNews(currentArticles);
-                updatePagination();
-            } else {
-                throw new Error(data.message || 'Failed to fetch news');
-            }
-        } catch (error) {
-            console.error('Error fetching news:', error);
-            apiNewsGrid.innerHTML = `
-                <div class="error-message">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <p>Failed to load tech news. Please try again later.</p>
-                    <button class="retry-btn">Retry</button>
-                </div>
-            `;
-            
-            document.querySelector('.retry-btn')?.addEventListener('click', () => {
-                fetchNews(currentPage, currentQuery, currentCategory);
-            });
-        } finally {
-            loadingSpinner.style.display = 'none';
-        }
-    }
-
-    // Display API news articles
-    function displayApiNews(articles) {
-        if (articles.length === 0) {
-            apiNewsGrid.innerHTML = `
-                <div class="no-results">
-                    <i class="fas fa-newspaper"></i>
-                    <p>No tech news articles found. Try a different search.</p>
-                </div>
-            `;
-            return;
-        }
-        
+    function displayNews(articles) {
         apiNewsGrid.innerHTML = articles.map(article => `
-            <article class="news-card" data-category="tech">
+            <article class="news-card">
                 <div class="news-card-header">
-                    <span class="news-category tech">TechCrunch</span>
-                    <span class="news-date">${new Date(article.publishedAt).toLocaleDateString()}</span>
-                </div>
-                <div class="news-card-image">
-                    <img src="${article.urlToImage || './assets/images/cloud.jpg'}" alt="${article.title}">
+                    <span class="news-category tech">Tech News</span>
+                    <span class="news-date">${article.date}</span>
                 </div>
                 <div class="news-card-content">
                     <h3>${article.title}</h3>
-                    <p>${article.description || 'No description available'}</p>
-                    <a href="${article.url}" target="_blank" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    <p>${article.desc}</p>
                 </div>
             </article>
         `).join('');
     }
 
-    // Update pagination controls
-    function updatePagination() {
-        currentPageEl.textContent = currentPage;
-        totalPagesEl.textContent = totalPages;
-        
-        prevPageBtn.disabled = currentPage <= 1;
-        nextPageBtn.disabled = currentPage >= totalPages;
-    }
-
-    // Event listeners for API news section
-    prevPageBtn.addEventListener('click', () => {
-        if (currentPage > 1) {
-            fetchNews(currentPage - 1, currentQuery, currentCategory);
-        }
-    });
-
-    nextPageBtn.addEventListener('click', () => {
-        if (currentPage < totalPages) {
-            fetchNews(currentPage + 1, currentQuery, currentCategory);
-        }
-    });
-
+    // Search functionality
     searchBtn.addEventListener('click', () => {
-        const query = newsSearch.value.trim();
-        fetchNews(1, query, currentCategory);
+        const query = newsSearch.value.toLowerCase();
+        const filtered = techNews.filter(n => n.title.toLowerCase().includes(query));
+        displayNews(filtered);
     });
 
-    newsSearch.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            const query = newsSearch.value.trim();
-            fetchNews(1, query, currentCategory);
-        }
-    });
-
-    newsCategory.addEventListener('change', () => {
-        currentCategory = newsCategory.value;
-        filterAllNews();
-    });
-
-    // Filter all news (both custom and API)
-    function filterAllNews() {
-        if (currentCategory === 'all') {
-            document.querySelectorAll('.news-card').forEach(card => {
-                card.style.display = 'block';
-            });
-            return;
-        }
-        
-        document.querySelectorAll('.news-card').forEach(card => {
-            if (card.dataset.category === currentCategory) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    }
-
-    // Initial fetch
-    fetchNews();
+    // Initial load
+    displayNews(techNews);
 });
     </script>
 </body>
