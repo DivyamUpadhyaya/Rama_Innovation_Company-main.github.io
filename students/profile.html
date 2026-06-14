@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intern Verification Profile</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background-color: #f4f4f9; }
+        .profile-card { background: white; padding: 30px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.1); max-width: 400px; width: 100%; }
+        h2 { color: #333; margin-bottom: 5px; }
+        p { color: #666; font-size: 16px; margin: 10px 0; }
+        .status { font-weight: bold; color: green; }
+        .loading { font-style: italic; color: #999; }
+    </style>
+</head>
+<body>
+
+<div class="profile-card">
+    <div id="loader" class="loading">Fetching intern details...</div>
+    <div id="profile-content" style="display: none;">
+        <h2 id="intern-name">Loading...</h2>
+        <p><strong>Email:</strong> <span id="intern-email">N/A</span></p>
+        <p><strong>College/University:</strong> <span id="intern-college">N/A</span></p>
+        <p><strong>Verification Status:</strong> <span class="status">✓ Verified Intern</span></p>
+    </div>
+    <div id="error-message" style="display: none; color: red;"></div>
+</div>
+
+<script>
+    // 1. Get the 'intern' parameter from the current browser URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const internName = urlParams.get('intern');
+
+    // 2. Your Google Apps Script Web App URL 
+    const scriptUrl = "https://script.google.com/macros/s/AKfycbwzHOLrRl1D3H7kzqoCgTqVIxDAq7c-N2R2fbAZOwNsHJH3jM2S_jJpmfm72CfdJwE2sQ/exec";
+
+    if (internName) {
+        // 3. Fetch data from Google Sheets via the Script using ?intern=
+        fetch(`${scriptUrl}?intern=${encodeURIComponent(internName)}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loader').style.display = 'none';
+                
+                if (data.status === "success") {
+                    // 4. Update elements mapping exactly to your Google Sheet Column headers
+                    document.getElementById('intern-name').innerText = data.data["Full Name\n(Use CAPITAL LETTERS only)"] || internName;
+                    document.getElementById('intern-email').innerText = data.data["Email Address"] || "N/A";
+                    document.getElementById('intern-college').innerText = data.data["College/University Name\n(Please enter the full official name of your college/university)"] || "N/A";
+                    
+                    document.getElementById('profile-content').style.display = 'block';
+                } else {
+                    document.getElementById('error-message').innerText = "Profile not found or invalid link.";
+                    document.getElementById('error-message').style.display = 'block';
+                }
+            })
+            .catch(error => {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('error-message').innerText = "Error connecting to verification server.";
+                document.getElementById('error-message').style.display = 'block';
+                console.error(error);
+            });
+    } else {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('error-message').innerText = "No intern specified in the URL.";
+        document.getElementById('error-message').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
